@@ -1,15 +1,18 @@
 package com.sout_rahim.quran_ay.data.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(
     tableName = "QuranSura"
 )
 data class SurahItem(
-    var NAyah: Int?,
-    var id: Int?,
-    var name: String?,
-    var name_symbol: String?,
-    var type: String?
+    @PrimaryKey(autoGenerate = false)
+    val id: Int?,  // Allow nullable id
+    val NAyah: Int?,  // Allow nullable NAyah
+    val name: String?,  // Allow nullable fields
+    val name_symbol: String?,
+    val type: String?
 ): Serializable

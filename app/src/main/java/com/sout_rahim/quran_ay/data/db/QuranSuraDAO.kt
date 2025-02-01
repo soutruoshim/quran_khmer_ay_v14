@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QuranSuraDAO {
-    @Query("SELECT * FROM QuranSura")
+    @Query("SELECT * FROM QuranSura ORDER BY id ASC")
     fun getAllSurahs(): Flow<List<SurahItem>>  // Using Flow for real-time updates
 
     @Query("SELECT * FROM QuranSura WHERE id = :surahId OR name LIKE '%' || :surahName || '%'")
