@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">អាល់កូរ៉ាអាខ្មែរ</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="surah_fragment_label">ផ្នែកទី១</string>
+    <string name="surah_content_fragment_label">ផ្នែកទី២</string>
+    <string name="next">បន្ទាប់</string>
+    <string name="previous">មុន</string>
+
+    <string name="menu_bookmark">ចំណាំ</string>
+    <string name="menu_help">ជំនួយ និងមតិផ្តល់យោបល់</string>
+    <string name="menu_about">អំពីកម្មវិធី</string>
+    <string name="menu_share">ចែករំលែកកម្មវិធី</string>
+    <string name="menu_rate">វាយតម្លៃកម្មវិធី</string>
+    <string name="menu_more">កម្មវិធីផ្សេងទៀត</string>
+    <string name="menu_other_options">ផ្សេងទៀត</string>
+    <string name="menu_settings">ការកំណត់</string>
+    <string name="quran_translate_to_khmer">ការបកប្រែអាល់កូរ៉ាដល់ខ្មែរ</string>
+    <string name="dark_mode">របៀបងងឹត</string>
+    <string name="search_here">ស្វែងរកទីនេះ</string>
+</resources>

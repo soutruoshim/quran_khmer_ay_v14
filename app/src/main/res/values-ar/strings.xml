@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">القرآن الخمير</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="surah_fragment_label">الشريحة الأولى</string>
+    <string name="surah_content_fragment_label">الشريحة الثانية</string>
+    <string name="next">التالي</string>
+    <string name="previous">السابق</string>
+
+    <string name="menu_bookmark">الإشارات المرجعية</string>
+    <string name="menu_help">المساعدة والتعليقات</string>
+    <string name="menu_about">حول التطبيق</string>
+    <string name="menu_share">مشاركة التطبيق</string>
+    <string name="menu_rate">تقييم التطبيق</string>
+    <string name="menu_more">المزيد من التطبيقات</string>
+    <string name="menu_other_options">أخرى</string>
+    <string name="menu_settings">الإعدادات</string>
+    <string name="quran_translate_to_khmer">ترجمة القرآن إلى الخمير</string>
+    <string name="dark_mode">الوضع الداكن</string>
+    <string name="search_here">ابحث هنا</string>
+</resources>

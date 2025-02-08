@@ -41,6 +41,9 @@ android {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {

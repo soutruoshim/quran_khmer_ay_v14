@@ -1,0 +1,47 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:checkable="true"
+        android:id="@+id/nav_menu_bookmark"
+        android:icon="@drawable/ic_bookmark"
+        android:title="@string/menu_bookmark" />
+
+    <item
+        android:checkable="true"
+        android:id="@+id/nav_menu_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/menu_settings" />
+
+    <item
+        android:checkable="true"
+        android:id="@+id/nav_menu_help"
+        android:icon="@drawable/ic_help"
+        android:title="@string/menu_help" />
+
+    <item
+        android:checkable="true"
+        android:id="@+id/nav_menu_about"
+        android:icon="@drawable/ic_info"
+        android:title="@string/menu_about" />
+
+    <item
+        android:title="@string/menu_other_options">
+        <menu>
+            <item
+                android:checkable="true"
+                android:id="@+id/nav_menu_share"
+                android:icon="@drawable/ic_share"
+                android:title="@string/menu_share" />
+            <item
+                android:checkable="true"
+                android:id="@+id/nav_menu_rate"
+                android:icon="@drawable/ic_star"
+                android:title="@string/menu_rate" />
+            <item
+                android:checkable="true"
+                android:id="@+id/nav_menu_more"
+                android:icon="@drawable/ic_more_vert"
+                android:title="@string/menu_more" />
+        </menu>
+    </item>
+</menu>
