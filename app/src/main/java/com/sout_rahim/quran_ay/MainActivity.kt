@@ -17,6 +17,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.sout_rahim.quran_ay.databinding.ActivityMainBinding
+import com.sout_rahim.quran_ay.presentation.adapter.SurahAdapter
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,12 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var factory: QuranViewModelFactory
+
+    @Inject
+    lateinit var surahAdapter: SurahAdapter
+
     lateinit var viewModel: QuranViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,12 +121,12 @@ class MainActivity : AppCompatActivity() {
 //        }
 
        // Observe Bookmarks
-        viewModel.fetchAllBookmarks()
-        lifecycleScope.launch {
-            viewModel.bookmarks.collect { bookmarks ->
-                println("Bookmarks received in UI: $bookmarks") // Log in UI
-            }
-        }
+//        viewModel.fetchAllBookmarks()
+//        lifecycleScope.launch {
+//            viewModel.bookmarks.collect { bookmarks ->
+//                println("Bookmarks received in UI: $bookmarks") // Log in UI
+//            }
+//        }
     }
 
 
