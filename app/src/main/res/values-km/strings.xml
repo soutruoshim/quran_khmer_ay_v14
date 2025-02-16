@@ -2,7 +2,7 @@
     <string name="app_name">អាល់កូរ៉ាអាខ្មែរ</string>
     <!-- Strings used for fragments for navigation -->
     <string name="surah_fragment_label">ផ្នែកទី១</string>
-    <string name="surah_content_fragment_label">ផ្នែកទី២</string>
+    <string name="surah_content_fragment_label">សូរ៉ាហ៍</string>
     <string name="next">បន្ទាប់</string>
     <string name="previous">មុន</string>
 

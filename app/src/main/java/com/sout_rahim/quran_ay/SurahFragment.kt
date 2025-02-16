@@ -36,6 +36,7 @@ class SurahFragment : Fragment() {
                 bundle
             )
         }
+
         initRecyclerView()
         viewSurahList()
     }

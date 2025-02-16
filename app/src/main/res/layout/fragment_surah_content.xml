@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SurahContentFragment">
+    android:layout_marginTop="0dp"
+    android:paddingBottom="0dp"
+    android:paddingTop="0dp">
+    <!-- Search/Filter Section -->
+    <RelativeLayout
+        android:id="@+id/ftextSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="0dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:cardBackgroundColor="?attr/colorSurfaceContainerHigh"
+            app:cardCornerRadius="30dp"
+            android:padding="0dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="3dp">
+                <!-- Spinner for Dropdown -->
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown"
+                    android:text="آية"
+                    android:textAlignment="center"
+                    android:textDirection="rtl"
+                    android:textSize="13sp" />
+                <!-- Surah Name Display -->
+                <TextView
+                    android:id="@+id/surahName"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="Surah"
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <!-- Divider Line -->
+    <View
+        android:id="@+id/viewdivid"
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:layout_below="@id/ftextSearch"
+        android:background="#caa5a5a5" />
+
+    <!-- RecyclerView (Already AndroidX) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ayahRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Surah Content" />
-
-</FrameLayout>
+        android:layout_below="@id/viewdivid"
+        android:scrollbars="vertical" />
+</RelativeLayout>

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sout_rahim.quran_ay.data.model.SurahItem
-import com.sout_rahim.quran_ay.data.util.SurahUtils
+import com.sout_rahim.quran_ay.data.util.Constants
 import com.sout_rahim.quran_ay.databinding.ItemSurahBinding
 
 
@@ -47,17 +47,17 @@ class SurahAdapter:RecyclerView.Adapter<SurahAdapter.SurahViewHolder>() {
         fun bind(surahItem: SurahItem){
 
             val surahID: String = surahItem.id.toString()
-            binding.surahName.text = SurahUtils.SURAH_NAMES[(Integer.parseInt(surahID))-1]
+            binding.surahName.text = Constants.SURAH_NAMES[(Integer.parseInt(surahID))-1]
             binding.surahId.text = surahItem.id.toString()
             binding.surahType.text = surahItem.type.toString()
-            binding.ayahN.text = SurahUtils.AYAH_TEXT + surahItem.NAyah
+            binding.ayahN.text = Constants.AYAHS_TEXT + surahItem.NAyah
 
             //font surah
             // Get font using utility function
-            val fontFileSurahName = SurahUtils.getFontForSurah(surahID.toInt())
+            val fontFileSurahName = Constants.getFontForSurah(surahID.toInt())
             // Make sure the font file exists inside "assets/fonts/"
-            val fontPathSurahName = "${SurahUtils.FONT}/$fontFileSurahName"
-            val fontPathTradoBold = "${SurahUtils.FONT}/${SurahUtils.TRADOBOLD}"
+            val fontPathSurahName = "${Constants.FONT}/$fontFileSurahName"
+            val fontPathTradoBold = "${Constants.FONT}/${Constants.TRADOBOLD}"
             try {
                 val fontSurahName = Typeface.createFromAsset(binding.root.context.assets, fontPathSurahName)
                 val uthmanBold = Typeface.createFromAsset(binding.root.context.assets, fontPathTradoBold)

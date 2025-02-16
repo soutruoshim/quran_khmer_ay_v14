@@ -18,5 +18,9 @@
         android:id="@+id/surahContentFragment"
         android:name="com.sout_rahim.quran_ay.SurahContentFragment"
         android:label="@string/surah_content_fragment_label"
-        tools:layout="@layout/fragment_surah_content" />
+        tools:layout="@layout/fragment_surah_content" >
+        <argument
+            android:name="selected_surah"
+            app:argType="com.sout_rahim.quran_ay.data.model.SurahItem" />
+    </fragment>
 </navigation>

@@ -2,7 +2,7 @@
     <string name="app_name">القرآن الخمير</string>
     <!-- Strings used for fragments for navigation -->
     <string name="surah_fragment_label">الشريحة الأولى</string>
-    <string name="surah_content_fragment_label">الشريحة الثانية</string>
+    <string name="surah_content_fragment_label">سورة</string>
     <string name="next">التالي</string>
     <string name="previous">السابق</string>
 

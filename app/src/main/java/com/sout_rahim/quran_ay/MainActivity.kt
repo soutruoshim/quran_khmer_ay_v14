@@ -17,6 +17,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.sout_rahim.quran_ay.databinding.ActivityMainBinding
+import com.sout_rahim.quran_ay.presentation.adapter.AyahAdapter
 import com.sout_rahim.quran_ay.presentation.adapter.SurahAdapter
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModelFactory
@@ -35,6 +36,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var surahAdapter: SurahAdapter
+
+    @Inject
+    lateinit var ayahAdapter: AyahAdapter
 
     lateinit var viewModel: QuranViewModel
 
@@ -95,6 +99,8 @@ class MainActivity : AppCompatActivity() {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 if (destination.id == R.id.surahFragment) {
                     searchBar.visibility = View.VISIBLE
+                }else{
+                    searchBar.visibility = View.GONE
                 }
             }
         }

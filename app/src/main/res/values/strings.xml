@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Quran Khmer</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="surah_fragment_label">First Fragment</string>
-    <string name="surah_content_fragment_label">Second Fragment</string>
+    <string name="surah_fragment_label">Surah</string>
+    <string name="surah_content_fragment_label">Surah</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
