@@ -1,8 +1,15 @@
 package com.sout_rahim.quran_ay
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,15 +19,20 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDragHandleView
 import com.sout_rahim.quran_ay.data.model.SurahContentItem
 import com.sout_rahim.quran_ay.data.util.Constants
 import com.sout_rahim.quran_ay.data.util.Constants.SURAH_TEXT
+import com.sout_rahim.quran_ay.databinding.BottomSheetBinding
 import com.sout_rahim.quran_ay.databinding.FragmentSurahContentBinding
 import com.sout_rahim.quran_ay.presentation.adapter.AyahAdapter
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
@@ -31,6 +43,8 @@ class SurahContentFragment : Fragment() {
     private lateinit var fragmentSurahContentBinding: FragmentSurahContentBinding
     private  lateinit var viewModel: QuranViewModel
     private lateinit var ayahAdapter: AyahAdapter
+
+    private lateinit var bottomSheetDialog: BottomSheetDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,14 +61,18 @@ class SurahContentFragment : Fragment() {
         viewModel= (activity as MainActivity).viewModel
         ayahAdapter = (activity as MainActivity).ayahAdapter
 
+        bottomSheetDialog = BottomSheetDialog(requireContext())
+
+
         ayahAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable(Constants.SELECTED_SURAH,it)
             }
-//            findNavController().navigate(
-//                R.id.action_surahFragment_to_surahContentFragment,
-//                bundle
-//            )
+
+            showBottomSheet(it)
+
+            Log.d("MYTAG", "Item clicked: $it")
+
         }
 
         val args : SurahContentFragmentArgs by navArgs()
@@ -74,6 +92,69 @@ class SurahContentFragment : Fragment() {
         viewSurahList(surahItem.id!!)
         setupSpinnerSelection()
     }
+
+    private fun showBottomSheet(surahContentItem: SurahContentItem) {
+
+        bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.NoOverlayDialog)
+        //bottomSheetDialog = BottomSheetDialog(requireContext())
+        val binding = BottomSheetBinding.inflate(LayoutInflater.from(requireContext()))
+        bottomSheetDialog.setContentView(binding.root)
+
+
+
+       // Set click listener for the drag handle to dismiss the bottom sheet
+        binding.dragHandle.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        // Set click listener for the "Copy" option
+        binding.layoutCopy.setOnClickListener {
+            // Handle the "Copy" action
+            copyText()
+            bottomSheetDialog.dismiss()
+        }
+
+        // Set click listener for the "Share" option
+        binding.layoutShare.setOnClickListener {
+            // Handle the "Share" action
+            shareContent()
+            bottomSheetDialog.dismiss()
+        }
+
+        // Set click listener for the "Add Bookmark" option
+        binding.layoutBookmark.setOnClickListener {
+            // Handle the "Add Bookmark" action
+            addBookmark()
+            bottomSheetDialog.dismiss()
+        }
+
+
+        bottomSheetDialog.show()
+    }
+
+    // Function to handle the "Copy" action
+    private fun copyText() {
+        // Implement your copy logic here
+        val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("label", "Text to copy") // Replace "Text to copy" with the actual text
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(requireContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show()
+    }
+
+    // Function to handle the "Share" action
+    private fun shareContent() {
+        // Implement your share logic here
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Content to share") // Replace "Content to share" with the actual content
+        startActivity(Intent.createChooser(shareIntent, "Share via"))
+    }
+
+    // Function to handle the "Add Bookmark" action
+    private fun addBookmark() {
+        // Implement your bookmark logic here
+        Toast.makeText(requireContext(), "Bookmark added", Toast.LENGTH_SHORT).show()
+    }
+
     private fun setupSpinnerSelection() {
         fragmentSurahContentBinding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

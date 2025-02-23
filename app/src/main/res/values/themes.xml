@@ -46,6 +46,14 @@
         <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer</item>
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+
+    </style>
+    <style name="NoOverlayDialog" parent="ThemeOverlay.Material3.Dialog">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item> <!-- Match the status bar color -->
+        <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item> <!-- Optional: Match the navigation bar color -->
     </style>
 </resources>
