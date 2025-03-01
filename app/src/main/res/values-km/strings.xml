@@ -17,4 +17,7 @@
     <string name="quran_translate_to_khmer">ការបកប្រែអាល់កូរ៉ាដល់ខ្មែរ</string>
     <string name="dark_mode">របៀបងងឹត</string>
     <string name="search_here">ស្វែងរកទីនេះ</string>
+    <string name="copied_text">បានចម្លង</string>
+    <string name="share_via">ចែករំលែកតាម</string>
+    <string name="copied_to_clipboard">បានចម្លងទៅក្ដារតម្បៀតខ្ទាស់</string>
 </resources>

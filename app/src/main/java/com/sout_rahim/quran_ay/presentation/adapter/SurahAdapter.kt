@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sout_rahim.quran_ay.data.model.SurahItem
-import com.sout_rahim.quran_ay.data.util.Constants
+import com.sout_rahim.quran_ay.util.Constants
 import com.sout_rahim.quran_ay.databinding.ItemSurahBinding
 
 

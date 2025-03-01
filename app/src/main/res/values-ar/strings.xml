@@ -17,4 +17,7 @@
     <string name="quran_translate_to_khmer">ترجمة القرآن إلى الخمير</string>
     <string name="dark_mode">الوضع الداكن</string>
     <string name="search_here">ابحث هنا</string>
+    <string name="copied_text">تم النسخ</string>
+    <string name="share_via">مشاركة عبر</string>
+    <string name="copied_to_clipboard">تم النسخ إلى الحافظة</string>
 </resources>

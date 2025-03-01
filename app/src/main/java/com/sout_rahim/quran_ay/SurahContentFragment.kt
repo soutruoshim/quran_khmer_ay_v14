@@ -1,15 +1,8 @@
 package com.sout_rahim.quran_ay
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
-import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -19,19 +12,17 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDragHandleView
 import com.sout_rahim.quran_ay.data.model.SurahContentItem
-import com.sout_rahim.quran_ay.data.util.Constants
-import com.sout_rahim.quran_ay.data.util.Constants.SURAH_TEXT
+import com.sout_rahim.quran_ay.util.Constants
+import com.sout_rahim.quran_ay.util.Constants.SURAH_TEXT
+import com.sout_rahim.quran_ay.util.Helper
 import com.sout_rahim.quran_ay.databinding.BottomSheetBinding
 import com.sout_rahim.quran_ay.databinding.FragmentSurahContentBinding
 import com.sout_rahim.quran_ay.presentation.adapter.AyahAdapter
@@ -94,59 +85,27 @@ class SurahContentFragment : Fragment() {
     }
 
     private fun showBottomSheet(surahContentItem: SurahContentItem) {
+        bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.NoOverlayDialog).apply {
+            val binding = BottomSheetBinding.inflate(LayoutInflater.from(context))
+            setContentView(binding.root)
 
-        bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.NoOverlayDialog)
-        //bottomSheetDialog = BottomSheetDialog(requireContext())
-        val binding = BottomSheetBinding.inflate(LayoutInflater.from(requireContext()))
-        bottomSheetDialog.setContentView(binding.root)
-
-
-
-       // Set click listener for the drag handle to dismiss the bottom sheet
-        binding.dragHandle.setOnClickListener {
-            bottomSheetDialog.dismiss()
+            with(binding) {
+                dragHandle.setOnClickListener { dismiss() }
+                layoutCopy.setOnClickListener {
+                    Helper.copyToClipboard(requireContext(), Helper.formatAyahText(surahContentItem))
+                    dismiss()
+                }
+                layoutShare.setOnClickListener {
+                    Helper.shareText(requireContext(), Helper.formatAyahText(surahContentItem))
+                    dismiss()
+                }
+                layoutBookmark.setOnClickListener {
+                    addBookmark()
+                    dismiss()
+                }
+            }
         }
-        // Set click listener for the "Copy" option
-        binding.layoutCopy.setOnClickListener {
-            // Handle the "Copy" action
-            copyText()
-            bottomSheetDialog.dismiss()
-        }
-
-        // Set click listener for the "Share" option
-        binding.layoutShare.setOnClickListener {
-            // Handle the "Share" action
-            shareContent()
-            bottomSheetDialog.dismiss()
-        }
-
-        // Set click listener for the "Add Bookmark" option
-        binding.layoutBookmark.setOnClickListener {
-            // Handle the "Add Bookmark" action
-            addBookmark()
-            bottomSheetDialog.dismiss()
-        }
-
-
         bottomSheetDialog.show()
-    }
-
-    // Function to handle the "Copy" action
-    private fun copyText() {
-        // Implement your copy logic here
-        val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("label", "Text to copy") // Replace "Text to copy" with the actual text
-        clipboard.setPrimaryClip(clip)
-        Toast.makeText(requireContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show()
-    }
-
-    // Function to handle the "Share" action
-    private fun shareContent() {
-        // Implement your share logic here
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Content to share") // Replace "Content to share" with the actual content
-        startActivity(Intent.createChooser(shareIntent, "Share via"))
     }
 
     // Function to handle the "Add Bookmark" action
@@ -191,19 +150,17 @@ class SurahContentFragment : Fragment() {
         viewModel.fetchSurahContent(surahId)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.surahContent.collect { ayahs ->
-
                 setAyahNumToSpinner(ayahs)
-
                 // Ensure the list is not empty before checking the first Ayah
                 if (ayahs.isNotEmpty()) {
                     val firstAyahNumber = ayahs[0].SuraID?.toString() ?: "0"
                     // Create a mutable list from the collected ayahs
                     val modifiedAyahs = ayahs.toMutableList()
                     // Add Bismillah except for Surah Al-Fatiha (1) and At-Tawbah (9)
-                    if (!(firstAyahNumber == "1" || firstAyahNumber == "9")) {
+                    if (!(firstAyahNumber == Constants.FIRST_AYAH_NUMBER || firstAyahNumber == Constants.SURAH_TAWBAH_NUMBER)) {
                         modifiedAyahs.add(
-                            0, // Add at the beginning of the list
-                            createBismillahItem()
+                            Constants.ZERO, // Add at the beginning of the list
+                            Helper.createBismillahItem()
                         )
                     }
                     // Submit the modified list to the adapter
@@ -217,34 +174,10 @@ class SurahContentFragment : Fragment() {
     }
 
     private fun setAyahNumToSpinner(surahContentList: List<SurahContentItem>) {
-        val labels = getAyahNumber(surahContentList) // Adjust based on your model structure
+        val labels = Helper.getAyahNumbers(surahContentList) // Adjust based on your model structure
         val dataAdapter = ArrayAdapter(requireContext(), R.layout.spinner, labels)
         dataAdapter.setDropDownViewResource(R.layout.spinner)
         fragmentSurahContentBinding.spinner.adapter = dataAdapter
-    }
-
-    private fun getAyahNumber(surahContentList: List<SurahContentItem>): List<String> {
-        val labels: MutableList<String> = mutableListOf()
-        // Add a header label if needed
-        labels.add(Constants.AYAH_TEXT)
-        // Iterate over the list and extract the relevant field
-        for (item in surahContentList) {
-            labels.add(item.VerseID.toString()) // Adjust based on your model structure
-            Log.d(Constants.MYTAG, item.VerseID.toString())
-        }
-        return labels
-    }
-
-    private fun createBismillahItem(): SurahContentItem {
-        return SurahContentItem(
-            ID = 0,
-            AyahNormal = "0",
-            AyahText = Constants.BISMILLAH_TEXT,
-            AyahTextKhmer = Constants.BISMILLAH_TRANSLATE_TEXT,
-            SuraID = 0,
-            SurahName = null,
-            VerseID = 0
-        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
