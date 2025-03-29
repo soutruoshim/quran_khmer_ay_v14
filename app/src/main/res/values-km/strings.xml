@@ -20,4 +20,10 @@
     <string name="copied_text">បានចម្លង</string>
     <string name="share_via">ចែករំលែកតាម</string>
     <string name="copied_to_clipboard">បានចម្លងទៅក្ដារតម្បៀតខ្ទាស់</string>
+    <string name="add_bookmark">បន្ថែមចំណាំ</string>
+    <string name="remove_bookmark">លុបចំណាំ</string>
+    <string name="bookmark_added">បានបន្ថែមចំណាំ</string>
+    <string name="bookmark_removed">បានលុបចំណាំ</string>
+    <string name="share">ចែករំលែក</string>
+    <string name="copy">ចម្លង</string>
 </resources>

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.sout_rahim.quran_ay.data.model.FavoriteItem
 import com.sout_rahim.quran_ay.data.model.SurahContentItem
 import com.sout_rahim.quran_ay.util.Constants
 import com.sout_rahim.quran_ay.util.Constants.SURAH_TEXT
@@ -88,6 +89,10 @@ class SurahContentFragment : Fragment() {
         bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.NoOverlayDialog).apply {
             val binding = BottomSheetBinding.inflate(LayoutInflater.from(context))
             setContentView(binding.root)
+            viewModel.fetchAllBookmarks()
+            // Observe current bookmarks
+            val favoriteItem = FavoriteItem.fromSurahContentItem(surahContentItem)
+            val isBookmarked = viewModel.bookmarks.value.any { it.id == favoriteItem.id }
 
             with(binding) {
                 dragHandle.setOnClickListener { dismiss() }
@@ -99,19 +104,29 @@ class SurahContentFragment : Fragment() {
                     Helper.shareText(requireContext(), Helper.formatAyahText(surahContentItem))
                     dismiss()
                 }
-                layoutBookmark.setOnClickListener {
-                    addBookmark()
-                    dismiss()
+
+                if (isBookmarked) {
+                    layoutBookmark.text = getString(R.string.remove_bookmark)
+                    layoutBookmark.setIconResource(R.drawable.ic_bookmark_remove)
+                    layoutBookmark.setOnClickListener {
+                        viewModel.removeBookmark(favoriteItem)
+                        viewModel.fetchAllBookmarks()
+                        Toast.makeText(requireContext(), getString(R.string.bookmark_removed), Toast.LENGTH_SHORT).show()
+                        dismiss()
+                    }
+                } else {
+                    layoutBookmark.text = getString(R.string.add_bookmark)
+                    layoutBookmark.setIconResource(R.drawable.ic_bookmark_border)
+                    layoutBookmark.setOnClickListener {
+                        viewModel.addBookmark(favoriteItem)
+                        viewModel.fetchAllBookmarks()
+                        Toast.makeText(requireContext(), getString(R.string.bookmark_added), Toast.LENGTH_SHORT).show()
+                        dismiss()
+                    }
                 }
             }
         }
         bottomSheetDialog.show()
-    }
-
-    // Function to handle the "Add Bookmark" action
-    private fun addBookmark() {
-        // Implement your bookmark logic here
-        Toast.makeText(requireContext(), "Bookmark added", Toast.LENGTH_SHORT).show()
     }
 
     private fun setupSpinnerSelection() {
@@ -153,7 +168,7 @@ class SurahContentFragment : Fragment() {
                 setAyahNumToSpinner(ayahs)
                 // Ensure the list is not empty before checking the first Ayah
                 if (ayahs.isNotEmpty()) {
-                    val firstAyahNumber = ayahs[0].SuraID?.toString() ?: "0"
+                    val firstAyahNumber = ayahs[0].SuraID?.toString() ?: Constants.ZERO_STRING
                     // Create a mutable list from the collected ayahs
                     val modifiedAyahs = ayahs.toMutableList()
                     // Add Bismillah except for Surah Al-Fatiha (1) and At-Tawbah (9)
@@ -195,3 +210,4 @@ class SurahContentFragment : Fragment() {
         }
     }
 }
+

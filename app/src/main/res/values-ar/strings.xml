@@ -20,4 +20,10 @@
     <string name="copied_text">تم النسخ</string>
     <string name="share_via">مشاركة عبر</string>
     <string name="copied_to_clipboard">تم النسخ إلى الحافظة</string>
+    <string name="add_bookmark">إضافة إلى العلامات</string>
+    <string name="remove_bookmark">إزالة من العلامات</string>
+    <string name="bookmark_added">تمت الإضافة إلى العلامات</string>
+    <string name="bookmark_removed">تمت الإزالة من العلامات</string>
+    <string name="share">مشاركة</string>
+    <string name="copy">نسخ</string>
 </resources>
