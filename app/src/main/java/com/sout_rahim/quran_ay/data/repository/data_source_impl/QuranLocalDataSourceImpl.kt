@@ -57,5 +57,9 @@ class QuranLocalDataSourceImpl(
     override fun getAllBookmarks(): Flow<List<FavoriteItem>> {
         return favoriteDAO.getAllBookmarks()
     }
+
+    override fun getAllBookmarksAyahContent(): Flow<List<SurahContentItem>> {
+        return favoriteDAO.getAllSurahContentsFromFavorites()
+    }
 }
 

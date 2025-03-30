@@ -18,7 +18,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 import androidx.lifecycle.ViewModel
+import com.sout_rahim.quran_ay.domain.usecase.GetAllBookmarksContentUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 
 class QuranViewModel(
     private val getAllSurahsUseCase: GetAllSurahsUseCase,
@@ -29,7 +32,8 @@ class QuranViewModel(
     private val addBookmarkUseCase: AddBookmarkUseCase,
     private val getAllBookmarksUseCase: GetAllBookmarksUseCase,
     private val removeBookmarkUseCase: RemoveBookmarkUseCase,
-    private val removeAllBookmarksUseCase: RemoveAllBookmarksUseCase
+    private val removeAllBookmarksUseCase: RemoveAllBookmarksUseCase,
+    private val getAllBookmarksContentUseCase: GetAllBookmarksContentUseCase
 ) : ViewModel() {
 
     // State Flows for UI observation
@@ -50,6 +54,22 @@ class QuranViewModel(
 
     private val _bookmarks = MutableStateFlow<List<FavoriteItem>>(emptyList())
     val bookmarks: StateFlow<List<FavoriteItem>> = _bookmarks
+
+    private val _surahBookmarkContent = MutableStateFlow<List<SurahContentItem>>(emptyList())
+    val surahBookmarkContent: StateFlow<List<SurahContentItem>> = _surahBookmarkContent
+
+    private val _scrollToAyah = MutableStateFlow<Int?>(null)
+    val scrollToAyah: StateFlow<Int?> = _scrollToAyah
+
+    fun scrollToAyah(verseId: Int) {
+        _scrollToAyah.value = verseId
+    }
+
+    suspend fun getSurahById(id: Int): SurahItem? {
+        return withContext(Dispatchers.Default) {
+            _surahs.value.firstOrNull { it.id == id }
+        }
+    }
 
     // Fetch all Surahs
     fun fetchAllSurahs() {
@@ -110,6 +130,15 @@ class QuranViewModel(
             getAllBookmarksUseCase()
                 .catch { e -> e.printStackTrace() }
                 .collect { _bookmarks.value = it }
+        }
+    }
+
+    // Fetch all bookmarks content
+    fun fetchAllBookmarksContent() {
+        viewModelScope.launch {
+            getAllBookmarksContentUseCase()
+                .catch { e -> e.printStackTrace() }
+                .collect { _surahBookmarkContent.value = it }
         }
     }
 

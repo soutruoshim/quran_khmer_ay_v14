@@ -26,5 +26,8 @@
     <string name="bookmark_removed">Bookmark removed</string>
     <string name="share">Share</string>
     <string name="copy">Copy</string>
+    <string name="zoom_out">Zoom Out</string>
+    <string name="zoom_in">Zoom In</string>
+    <string name="clear_all">Clear All</string>
 
 </resources>

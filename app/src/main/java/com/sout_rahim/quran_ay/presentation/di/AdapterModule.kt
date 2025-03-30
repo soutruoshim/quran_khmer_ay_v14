@@ -1,6 +1,7 @@
 package com.sout_rahim.quran_ay.presentation.di
 
 import com.sout_rahim.quran_ay.presentation.adapter.AyahAdapter
+import com.sout_rahim.quran_ay.presentation.adapter.AyahBookmarkAdapter
 import com.sout_rahim.quran_ay.presentation.adapter.SurahAdapter
 import dagger.Module
 import dagger.Provides
@@ -21,5 +22,11 @@ class AdapterModule {
     @Provides
     fun provideAyahAdapter(): AyahAdapter {
         return AyahAdapter()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAyahBookmarkAdapter(): AyahBookmarkAdapter {
+        return AyahBookmarkAdapter()
     }
 }

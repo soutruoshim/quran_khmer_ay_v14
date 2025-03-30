@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/transparent">
 
     <FrameLayout
         android:id="@+id/standardBottomSheet"
@@ -37,9 +36,10 @@
                 android:id="@+id/drag_handle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.Material3.BottomSheet"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
-
+                android:layout_gravity="center_horizontal"
+                android:padding="8dp"
+                style="@style/Widget.Material3.BottomSheet.DragHandle"
+                tools:ignore="MissingConstraints" />
             <!-- Copy Option -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/layoutCopy"

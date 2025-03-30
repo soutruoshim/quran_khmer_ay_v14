@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sout_rahim.quran_ay.databinding.FragmentSurahBinding
 import com.sout_rahim.quran_ay.presentation.adapter.SurahAdapter
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
+import com.sout_rahim.quran_ay.util.Constants
 import kotlinx.coroutines.launch
 
 class SurahFragment : Fragment() {
@@ -28,9 +29,13 @@ class SurahFragment : Fragment() {
         surahAdapter= (activity as MainActivity).surahAdapter
 
         surahAdapter.setOnItemClickListener {
+
             val bundle = Bundle().apply {
                 putSerializable("selected_surah",it)
             }
+
+            viewModel.scrollToAyah(Constants.ZERO)
+
             findNavController().navigate(
                 R.id.action_surahFragment_to_surahContentFragment,
                 bundle

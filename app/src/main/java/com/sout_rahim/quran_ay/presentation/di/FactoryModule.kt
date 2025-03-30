@@ -1,6 +1,7 @@
 package com.sout_rahim.quran_ay.presentation.di
 
 import com.sout_rahim.quran_ay.domain.usecase.AddBookmarkUseCase
+import com.sout_rahim.quran_ay.domain.usecase.GetAllBookmarksContentUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAllBookmarksUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAllSurahsUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAyahByIndexUseCase
@@ -32,7 +33,8 @@ object FactoryModule {
         addBookmarkUseCase: AddBookmarkUseCase,
         getAllBookmarksUseCase: GetAllBookmarksUseCase,
         removeBookmarkUseCase: RemoveBookmarkUseCase,
-        removeAllBookmarksUseCase: RemoveAllBookmarksUseCase
+        removeAllBookmarksUseCase: RemoveAllBookmarksUseCase,
+        getAllBookmarksContentUseCase: GetAllBookmarksContentUseCase
     ): QuranViewModelFactory {
         return QuranViewModelFactory(
             getAllSurahsUseCase,
@@ -43,7 +45,8 @@ object FactoryModule {
             addBookmarkUseCase,
             getAllBookmarksUseCase,
             removeBookmarkUseCase,
-            removeAllBookmarksUseCase
+            removeAllBookmarksUseCase,
+            getAllBookmarksContentUseCase
         )
     }
 }

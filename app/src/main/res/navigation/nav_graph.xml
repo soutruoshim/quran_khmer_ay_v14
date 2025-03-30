@@ -23,4 +23,13 @@
             android:name="selected_surah"
             app:argType="com.sout_rahim.quran_ay.data.model.SurahItem" />
     </fragment>
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="com.sout_rahim.quran_ay.BookmarkFragment"
+        android:label="@string/menu_bookmark"
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_bookmarkFragment_to_surahContentFragment"
+            app:destination="@id/surahContentFragment" />
+    </fragment>
 </navigation>

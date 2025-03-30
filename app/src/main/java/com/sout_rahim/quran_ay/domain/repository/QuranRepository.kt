@@ -26,4 +26,5 @@ interface QuranRepository {
     suspend fun removeBookmark(favoriteItem: FavoriteItem)
     suspend fun removeAllBookmarks()
     fun getAllBookmarks(): Flow<List<FavoriteItem>>
+    fun getAllBookmarksAyahContent(): Flow<List<SurahContentItem>>
 }

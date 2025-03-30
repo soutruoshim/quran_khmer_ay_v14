@@ -26,4 +26,8 @@
     <string name="bookmark_removed">تمت الإزالة من العلامات</string>
     <string name="share">مشاركة</string>
     <string name="copy">نسخ</string>
+    <string name="zoom_out">تصغير</string>
+    <string name="zoom_in">تكبير</string>
+    <string name="clear_all">مسح الكل</string>
+
 </resources>

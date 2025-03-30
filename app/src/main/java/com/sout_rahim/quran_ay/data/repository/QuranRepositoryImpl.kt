@@ -47,4 +47,8 @@ class QuranRepositoryImpl(
     override fun getAllBookmarks(): Flow<List<FavoriteItem>> {
         return localDataSource.getAllBookmarks()
     }
+
+    override fun getAllBookmarksAyahContent(): Flow<List<SurahContentItem>> {
+        return localDataSource.getAllBookmarksAyahContent()
+    }
 }

@@ -32,7 +32,7 @@ object Helper {
         return if (surahContentItem.SurahName == null) {
             "${surahContentItem.AyahText}\n${surahContentItem.AyahTextKhmer}"
         } else {
-            "﴿${surahContentItem.AyahText}﴾ \t[${Constants.SURAH_TEXT} ${surahContentItem.SurahName}(${surahContentItem.VerseID})]\n${surahContentItem.AyahTextKhmer}"
+            "﴿${surahContentItem.AyahText}﴾\t[${Constants.SURAH_TEXT}${surahContentItem.SurahName}(${surahContentItem.VerseID})]\n${surahContentItem.AyahTextKhmer}"
         }
     }
 

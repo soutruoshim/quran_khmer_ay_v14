@@ -17,6 +17,7 @@ object Constants {
 
     const val FONT: String = "fonts"
     const val TRADOBOLD: String = "tradoB.ttf"
+    const val TRADO: String = "trado.ttf"
     const val UTHMANIC: String = "UthmanicHafs_V22.ttf"
     const val KHMEROS: String = "KhmerOS.ttf"
 

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,11 +17,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.sout_rahim.quran_ay.databinding.ActivityMainBinding
 import com.sout_rahim.quran_ay.presentation.adapter.AyahAdapter
+import com.sout_rahim.quran_ay.presentation.adapter.AyahBookmarkAdapter
 import com.sout_rahim.quran_ay.presentation.adapter.SurahAdapter
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,6 +38,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var ayahAdapter: AyahAdapter
+
+    @Inject
+    lateinit var ayahBookmarkAdapter: AyahBookmarkAdapter
 
     lateinit var viewModel: QuranViewModel
 
@@ -77,7 +79,8 @@ class MainActivity : AppCompatActivity() {
                 drawerLayout.close()
                 when (menuItem.itemId) {
                     R.id.nav_menu_bookmark ->{
-                        searchBar.visibility = View.VISIBLE // Hide SearchBar in Second Fragment
+                        navController.navigate(R.id.bookmarkFragment)
+                        searchBar.visibility = View.GONE // Hide SearchBar in Second Fragment
                     }
                     R.id.nav_menu_settings -> {
                         //navController.navigate(R.id.action_homeFragment_to_detailFragment)

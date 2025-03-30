@@ -3,6 +3,7 @@ package com.sout_rahim.quran_ay.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sout_rahim.quran_ay.domain.usecase.AddBookmarkUseCase
+import com.sout_rahim.quran_ay.domain.usecase.GetAllBookmarksContentUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAllBookmarksUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAllSurahsUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAyahByIndexUseCase
@@ -21,7 +22,8 @@ class QuranViewModelFactory(
     private val addBookmarkUseCase: AddBookmarkUseCase,
     private val getAllBookmarksUseCase: GetAllBookmarksUseCase,
     private val removeBookmarkUseCase: RemoveBookmarkUseCase,
-    private val removeAllBookmarksUseCase: RemoveAllBookmarksUseCase
+    private val removeAllBookmarksUseCase: RemoveAllBookmarksUseCase,
+    private val getAllBookmarksContentUseCase: GetAllBookmarksContentUseCase
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -36,7 +38,8 @@ class QuranViewModelFactory(
                 addBookmarkUseCase,
                 getAllBookmarksUseCase,
                 removeBookmarkUseCase,
-                removeAllBookmarksUseCase
+                removeAllBookmarksUseCase,
+                getAllBookmarksContentUseCase
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

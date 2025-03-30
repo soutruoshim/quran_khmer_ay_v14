@@ -61,7 +61,8 @@ class AyahAdapter:RecyclerView.Adapter<AyahAdapter.SurahViewHolder>() {
 
             // Apply formatted text to views
             binding.ayahText.text = formattedText
-            binding.translateText.text = surahContentItem.AyahTextKhmer
+            //binding.translateText.text =  surahContentItem.AyahTextKhmer
+            binding.translateText.text =  surahContentItem.AyahTextKhmer + "\t[អាយ៉ះទី("+surahContentItem.VerseID+")]";
 
             applyCustomFonts(binding)
 

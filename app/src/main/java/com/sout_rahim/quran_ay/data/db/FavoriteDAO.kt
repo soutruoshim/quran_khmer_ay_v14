@@ -37,20 +37,13 @@ interface FavoriteDAO {
     fun getAllBookmarks(): Flow<List<FavoriteItem>>
 
     /**
-     * Get the SurahContentItem based on SuraID and VerseID from a FavoriteItem
-     */
-    @Query("SELECT * FROM Quran_Ayah WHERE SuraID = :suraId AND VerseID = :verseId")
-    fun getSurahContentByFavorite(suraId: Int, verseId: Int): Flow<SurahContentItem>
-
-    /**
      * Get all SurahContentItems that are bookmarked
      * This will join `Favorite` with `Quran_Ayah` using `SuraID` and `VerseID`
      */
     @Query("""
         SELECT Quran_Ayah.* 
         FROM Quran_Ayah
-        INNER JOIN Favorite ON Favorite.SuraID = Quran_Ayah.SuraID 
-                            AND Favorite.VerseID = Quran_Ayah.VerseID
+        INNER JOIN Favorite ON Favorite.id = Quran_Ayah.ID
     """)
     fun getAllSurahContentsFromFavorites(): Flow<List<SurahContentItem>>
 }

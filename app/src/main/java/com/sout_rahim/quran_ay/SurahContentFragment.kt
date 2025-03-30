@@ -13,7 +13,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -91,6 +93,7 @@ class SurahContentFragment : Fragment() {
             setContentView(binding.root)
             viewModel.fetchAllBookmarks()
             // Observe current bookmarks
+
             val favoriteItem = FavoriteItem.fromSurahContentItem(surahContentItem)
             val isBookmarked = viewModel.bookmarks.value.any { it.id == favoriteItem.id }
 
@@ -105,23 +108,29 @@ class SurahContentFragment : Fragment() {
                     dismiss()
                 }
 
-                if (isBookmarked) {
-                    layoutBookmark.text = getString(R.string.remove_bookmark)
-                    layoutBookmark.setIconResource(R.drawable.ic_bookmark_remove)
-                    layoutBookmark.setOnClickListener {
-                        viewModel.removeBookmark(favoriteItem)
-                        viewModel.fetchAllBookmarks()
-                        Toast.makeText(requireContext(), getString(R.string.bookmark_removed), Toast.LENGTH_SHORT).show()
-                        dismiss()
-                    }
+                if (surahContentItem.ID == 0) {
+                    layoutBookmark.visibility = View.GONE
                 } else {
-                    layoutBookmark.text = getString(R.string.add_bookmark)
-                    layoutBookmark.setIconResource(R.drawable.ic_bookmark_border)
-                    layoutBookmark.setOnClickListener {
-                        viewModel.addBookmark(favoriteItem)
-                        viewModel.fetchAllBookmarks()
-                        Toast.makeText(requireContext(), getString(R.string.bookmark_added), Toast.LENGTH_SHORT).show()
-                        dismiss()
+                    layoutBookmark.visibility = View.VISIBLE
+
+                    if (isBookmarked) {
+                        layoutBookmark.text = getString(R.string.remove_bookmark)
+                        layoutBookmark.setIconResource(R.drawable.ic_bookmark_remove)
+                        layoutBookmark.setOnClickListener {
+                            viewModel.removeBookmark(favoriteItem)
+                            viewModel.fetchAllBookmarks()
+                            Toast.makeText(requireContext(), getString(R.string.bookmark_removed), Toast.LENGTH_SHORT).show()
+                            dismiss()
+                        }
+                    } else {
+                        layoutBookmark.text = getString(R.string.add_bookmark)
+                        layoutBookmark.setIconResource(R.drawable.ic_bookmark_border)
+                        layoutBookmark.setOnClickListener {
+                            viewModel.addBookmark(favoriteItem)
+                            viewModel.fetchAllBookmarks()
+                            Toast.makeText(requireContext(), getString(R.string.bookmark_added), Toast.LENGTH_SHORT).show()
+                            dismiss()
+                        }
                     }
                 }
             }
@@ -132,22 +141,31 @@ class SurahContentFragment : Fragment() {
     private fun setupSpinnerSelection() {
         fragmentSurahContentBinding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
                 if (position != 0) { // Ensure the first item (e.g., "آية") is not used
                     val item = fragmentSurahContentBinding.spinner.getItemAtPosition(position).toString()
                     Toast.makeText(requireContext(), item, Toast.LENGTH_LONG).show()
 
                     val itemScroll = item.toIntOrNull() ?: return
-
-                    fragmentSurahContentBinding.ayahRecyclerView.layoutManager?.let { layoutManager ->
-                        if (layoutManager is LinearLayoutManager) {
-                            layoutManager.scrollToPositionWithOffset(itemScroll, 0)
-                        }
-                    }
-
+//                    fragmentSurahContentBinding.ayahRecyclerView.layoutManager?.let { layoutManager ->
+//                        if (layoutManager is LinearLayoutManager) {
+//                            layoutManager.scrollToPositionWithOffset(itemScroll, 0)
+//                        }
+//                    }
+                    scrollToAyahPosition(itemScroll)
                 }
+
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // No action needed
+            }
+        }
+    }
+
+    private fun scrollToAyahPosition(position: Int) {
+        fragmentSurahContentBinding.ayahRecyclerView.layoutManager?.let { layoutManager ->
+            if (layoutManager is LinearLayoutManager) {
+                layoutManager.scrollToPositionWithOffset(position, 0)
             }
         }
     }
@@ -162,27 +180,26 @@ class SurahContentFragment : Fragment() {
     }
 
     private fun viewSurahList(surahId:Int) {
-        viewModel.fetchSurahContent(surahId)
+        viewModel.fetchSurahContent(surahId) // Start fetching
+
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.surahContent.collect { ayahs ->
-                setAyahNumToSpinner(ayahs)
-                // Ensure the list is not empty before checking the first Ayah
-                if (ayahs.isNotEmpty()) {
-                    val firstAyahNumber = ayahs[0].SuraID?.toString() ?: Constants.ZERO_STRING
-                    // Create a mutable list from the collected ayahs
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // Wait for content to be loaded
+                viewModel.surahContent.collect { ayahs ->
+                    setAyahNumToSpinner(ayahs)
+
                     val modifiedAyahs = ayahs.toMutableList()
-                    // Add Bismillah except for Surah Al-Fatiha (1) and At-Tawbah (9)
-                    if (!(firstAyahNumber == Constants.FIRST_AYAH_NUMBER || firstAyahNumber == Constants.SURAH_TAWBAH_NUMBER)) {
-                        modifiedAyahs.add(
-                            Constants.ZERO, // Add at the beginning of the list
-                            Helper.createBismillahItem()
-                        )
+                    if (ayahs.isNotEmpty()) {
+                        val firstAyahNumber = ayahs[0].SuraID?.toString() ?: Constants.ZERO_STRING
+
+                        if (!(firstAyahNumber == Constants.FIRST_AYAH_NUMBER || firstAyahNumber == Constants.SURAH_TAWBAH_NUMBER)) {
+                            modifiedAyahs.add(0, Helper.createBismillahItem())
+                        }
                     }
-                    // Submit the modified list to the adapter
-                    ayahAdapter.differ.submitList(modifiedAyahs)
-                } else {
-                    // If no ayahs, still update the adapter (empty list case)
-                    ayahAdapter.differ.submitList(ayahs)
+                    ayahAdapter.differ.submitList(modifiedAyahs) {
+                        // ✅ Callback after list is submitted — now safe to scroll
+                        viewModel.scrollToAyah.value?.let { scrollToAyahPosition(it) }
+                    }
                 }
             }
         }

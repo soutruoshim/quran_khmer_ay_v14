@@ -2,6 +2,7 @@ package com.sout_rahim.quran_ay.presentation.di
 
 import com.sout_rahim.quran_ay.domain.repository.QuranRepository
 import com.sout_rahim.quran_ay.domain.usecase.AddBookmarkUseCase
+import com.sout_rahim.quran_ay.domain.usecase.GetAllBookmarksContentUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAllBookmarksUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAllSurahsUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAyahByIndexUseCase
@@ -72,5 +73,11 @@ class UseCaseModule {
     @Provides
     fun provideRemoveBookmarkUseCase(repository: QuranRepository): RemoveBookmarkUseCase {
         return RemoveBookmarkUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetAllBookmarksContentUseCase(repository: QuranRepository): GetAllBookmarksContentUseCase {
+        return GetAllBookmarksContentUseCase(repository)
     }
 }

@@ -26,4 +26,7 @@
     <string name="bookmark_removed">បានលុបចំណាំ</string>
     <string name="share">ចែករំលែក</string>
     <string name="copy">ចម្លង</string>
+    <string name="zoom_out">បង្រួម</string>
+    <string name="zoom_in">ពង្រីក</string>
+    <string name="clear_all">សម្អាតទាំងអស់</string>
 </resources>
