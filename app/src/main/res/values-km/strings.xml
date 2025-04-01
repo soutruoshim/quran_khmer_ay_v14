@@ -29,4 +29,8 @@
     <string name="zoom_out">បង្រួម</string>
     <string name="zoom_in">ពង្រីក</string>
     <string name="clear_all">សម្អាតទាំងអស់</string>
+    <string name="languages">ភាសា</string>
+    <string name="english">អង់គ្លេស</string>
+    <string name="khmer">ខ្មែរ</string>
+    <string name="arabic">អារ៉ាបិច</string>
 </resources>

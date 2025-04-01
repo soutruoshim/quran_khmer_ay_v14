@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -28,6 +29,7 @@ class AyahAdapter:RecyclerView.Adapter<AyahAdapter.SurahViewHolder>() {
     }
 
     val differ = AsyncListDiffer(this,callback)
+    private var fontSize: Float = 22f
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurahViewHolder {
         val binding = ItemAyahBinding
@@ -61,10 +63,13 @@ class AyahAdapter:RecyclerView.Adapter<AyahAdapter.SurahViewHolder>() {
 
             // Apply formatted text to views
             binding.ayahText.text = formattedText
-            //binding.translateText.text =  surahContentItem.AyahTextKhmer
             binding.translateText.text =  surahContentItem.AyahTextKhmer + "\t[អាយ៉ះទី("+surahContentItem.VerseID+")]";
 
             applyCustomFonts(binding)
+
+            // Set font size dynamically from the ViewModel
+            binding.ayahText.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize)
+            binding.translateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize - 6)
 
             binding.btnAction.setOnClickListener {
                 onItemClickListener?.let {
@@ -72,6 +77,12 @@ class AyahAdapter:RecyclerView.Adapter<AyahAdapter.SurahViewHolder>() {
                 }
             }
         }
+    }
+
+    // Method to update font size from ViewModel
+    fun updateFontSize(fontSize: Float) {
+        this.fontSize = fontSize
+        notifyDataSetChanged()  // Notify adapter that the data set has changed and should be redrawn
     }
 
     private fun getReversedArabicNumber(verseId: String): String {

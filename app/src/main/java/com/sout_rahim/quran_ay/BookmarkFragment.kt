@@ -18,13 +18,13 @@ import com.sout_rahim.quran_ay.data.model.FavoriteItem
 import com.sout_rahim.quran_ay.databinding.FragmentBookmarkBinding
 import com.sout_rahim.quran_ay.presentation.adapter.AyahBookmarkAdapter
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
-import com.sout_rahim.quran_ay.util.Constants
-import com.sout_rahim.quran_ay.util.Helper
+import com.sout_rahim.quran_ay.presentation.viewmodel.SettingViewModel
 import kotlinx.coroutines.launch
 
 class BookmarkFragment : Fragment() {
     private lateinit var bookmarkFragmentBinding: FragmentBookmarkBinding
-    private  lateinit var viewModel: QuranViewModel
+    private  lateinit var quranViewModel: QuranViewModel
+    private lateinit var settingViewModel: SettingViewModel
     private lateinit var ayahBookmarkAdapter: AyahBookmarkAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,21 +38,25 @@ class BookmarkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         bookmarkFragmentBinding = FragmentBookmarkBinding.bind(view)
-        viewModel= (activity as MainActivity).viewModel
+
+        quranViewModel= (activity as MainActivity).quranViewModel
+        settingViewModel = (activity as MainActivity).settingViewModel
+
         ayahBookmarkAdapter = (activity as MainActivity).ayahBookmarkAdapter
+
 
         ayahBookmarkAdapter.setOnBookmarkClickListener {
             val favoriteItem = FavoriteItem.fromSurahContentItem(it)
-            viewModel.removeBookmark(favoriteItem)
-            viewModel.fetchAllBookmarks()
+            quranViewModel.removeBookmark(favoriteItem)
+            quranViewModel.fetchAllBookmarks()
             // Log.d("MYTAG", "Item clicked: $it")
         }
 
         ayahBookmarkAdapter.setOnRootClickListener {
 
             lifecycleScope.launch {
-                val selectedSurah = it.SuraID?.let { id -> viewModel.getSurahById(id) }
-                it.VerseID?.let { verseId -> viewModel.scrollToAyah(verseId) }
+                val selectedSurah = it.SuraID?.let { id -> quranViewModel.getSurahById(id) }
+                it.VerseID?.let { verseId -> quranViewModel.scrollToAyah(verseId) }
 
                 Log.d("selectedSurah", "Selected Surah: $selectedSurah")
 
@@ -68,6 +72,22 @@ class BookmarkFragment : Fragment() {
 
         initRecyclerView()
         viewBookmarkList()
+        observeFontSize()
+    }
+
+    // This function observes the fontSize LiveData and updates the adapter whenever it changes.
+    private fun observeFontSize() {
+        settingViewModel.fontSize.observe(viewLifecycleOwner) { fontSize ->
+            Log.d("MYTAG", "FontSize received in Activity Bookmark: $fontSize")
+            // Check if fontSize is greater than 26, if so, do not update
+            // If fontSize is greater than 26, set it to 26
+            val finalFontSize = if (fontSize > 26) {
+                26f  // Set to 26 if the font size is greater than 26
+            } else {
+                fontSize  // Use the received font size if it's less than or equal to 26
+            }
+            ayahBookmarkAdapter.updateFontSize(finalFontSize)
+        }
     }
 
     private fun initRecyclerView() {
@@ -80,9 +100,9 @@ class BookmarkFragment : Fragment() {
     }
 
     private fun viewBookmarkList() {
-        viewModel.fetchAllBookmarksContent()
+        quranViewModel.fetchAllBookmarksContent()
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.surahBookmarkContent.collect { ayahs ->
+            quranViewModel.surahBookmarkContent.collect { ayahs ->
                 ayahBookmarkAdapter.differ.submitList(ayahs)
                 Log.d("BookmarkDebug", "Received ${ayahs.size} bookmarked ayahs")
             }

@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -28,6 +29,7 @@ class AyahBookmarkAdapter:RecyclerView.Adapter<AyahBookmarkAdapter.SurahViewHold
     }
 
     val differ = AsyncListDiffer(this,callback)
+    private var fontSize: Float = 22f
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurahViewHolder {
         val binding = ItemAyahBookmarkBinding
@@ -42,6 +44,12 @@ class AyahBookmarkAdapter:RecyclerView.Adapter<AyahBookmarkAdapter.SurahViewHold
 
     override fun getItemCount(): Int {
         return differ.currentList.size
+    }
+
+    // Method to update font size from ViewModel
+    fun updateFontSize(fontSize: Float) {
+        this.fontSize = fontSize
+        notifyDataSetChanged()  // Notify adapter that the data set has changed and should be redrawn
     }
 
     inner class SurahViewHolder(
@@ -65,6 +73,12 @@ class AyahBookmarkAdapter:RecyclerView.Adapter<AyahBookmarkAdapter.SurahViewHold
             binding.surahText.text = "${Constants.SURAH_TEXT}${surahContentItem.SurahName}\t${Constants.AYAH_TEXT}"
             binding.extraText.text = "(${surahContentItem.VerseID})"
             applyCustomFonts(binding)
+
+            // Set font size dynamically from the ViewModel
+            binding.ayahText.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize)
+            binding.translateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize - 6)
+            binding.surahText.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize)
+            binding.extraText.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize - 6)
 
             binding.btnAction.setOnClickListener {
                 onBookmarkClickListener?.let {

@@ -29,5 +29,9 @@
     <string name="zoom_out">Zoom Out</string>
     <string name="zoom_in">Zoom In</string>
     <string name="clear_all">Clear All</string>
+    <string name="languages">Languages</string>
+    <string name="english">English</string>
+    <string name="khmer">Khmer</string>
+    <string name="arabic">Arabic</string>
 
 </resources>

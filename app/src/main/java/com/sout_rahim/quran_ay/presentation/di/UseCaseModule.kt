@@ -1,16 +1,24 @@
 package com.sout_rahim.quran_ay.presentation.di
 
 import com.sout_rahim.quran_ay.domain.repository.QuranRepository
+import com.sout_rahim.quran_ay.domain.repository.SettingRepository
 import com.sout_rahim.quran_ay.domain.usecase.AddBookmarkUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAllBookmarksContentUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAllBookmarksUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAllSurahsUseCase
+import com.sout_rahim.quran_ay.domain.usecase.GetAvailableLanguagesUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetAyahByIndexUseCase
+import com.sout_rahim.quran_ay.domain.usecase.GetCurrentLanguageUseCase
+import com.sout_rahim.quran_ay.domain.usecase.GetDarkModeUseCase
+import com.sout_rahim.quran_ay.domain.usecase.GetFontSizeUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetSearchContentUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetSearchSurahUseCase
 import com.sout_rahim.quran_ay.domain.usecase.GetSurahContentUseCase
 import com.sout_rahim.quran_ay.domain.usecase.RemoveAllBookmarksUseCase
 import com.sout_rahim.quran_ay.domain.usecase.RemoveBookmarkUseCase
+import com.sout_rahim.quran_ay.domain.usecase.SaveDarkModeUseCase
+import com.sout_rahim.quran_ay.domain.usecase.SaveFontSizeUseCase
+import com.sout_rahim.quran_ay.domain.usecase.SaveLanguageUseCase
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -79,5 +87,63 @@ class UseCaseModule {
     @Provides
     fun provideGetAllBookmarksContentUseCase(repository: QuranRepository): GetAllBookmarksContentUseCase {
         return GetAllBookmarksContentUseCase(repository)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideGetAvailableLanguagesUseCase(
+        repository: SettingRepository
+    ): GetAvailableLanguagesUseCase {
+        return GetAvailableLanguagesUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetCurrentLanguageUseCase(
+        repository: SettingRepository
+    ): GetCurrentLanguageUseCase {
+        return GetCurrentLanguageUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveLanguageUseCase(
+        repository: SettingRepository
+    ): SaveLanguageUseCase {
+        return SaveLanguageUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetFontSizeUseCase(
+        repository: SettingRepository
+    ): GetFontSizeUseCase {
+        return GetFontSizeUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveFontSizeUseCase(
+        repository: SettingRepository
+    ): SaveFontSizeUseCase {
+        return SaveFontSizeUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetDarkModeUseCase(
+        repository: SettingRepository
+    ): GetDarkModeUseCase {
+        return GetDarkModeUseCase(repository)
+    }
+
+    // Provide SaveDarkModeUseCase
+    @Singleton
+    @Provides
+    fun provideSaveDarkModeUseCase(
+        repository: SettingRepository
+    ): SaveDarkModeUseCase {
+        return SaveDarkModeUseCase(repository)
     }
 }

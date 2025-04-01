@@ -25,7 +25,7 @@ class SurahFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fragmentSurahBinding = FragmentSurahBinding.bind(view)
 
-        viewModel= (activity as MainActivity).viewModel
+        viewModel= (activity as MainActivity).quranViewModel
         surahAdapter= (activity as MainActivity).surahAdapter
 
         surahAdapter.setOnItemClickListener {

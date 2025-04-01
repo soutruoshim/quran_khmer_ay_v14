@@ -30,12 +30,14 @@ import com.sout_rahim.quran_ay.databinding.BottomSheetBinding
 import com.sout_rahim.quran_ay.databinding.FragmentSurahContentBinding
 import com.sout_rahim.quran_ay.presentation.adapter.AyahAdapter
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
+import com.sout_rahim.quran_ay.presentation.viewmodel.SettingViewModel
 import kotlinx.coroutines.launch
 
 
 class SurahContentFragment : Fragment() {
     private lateinit var fragmentSurahContentBinding: FragmentSurahContentBinding
-    private  lateinit var viewModel: QuranViewModel
+    private  lateinit var quranViewModel: QuranViewModel
+    private lateinit var settingViewModel: SettingViewModel
     private lateinit var ayahAdapter: AyahAdapter
 
     private lateinit var bottomSheetDialog: BottomSheetDialog
@@ -52,7 +54,9 @@ class SurahContentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         fragmentSurahContentBinding = FragmentSurahContentBinding.bind(view)
-        viewModel= (activity as MainActivity).viewModel
+        quranViewModel= (activity as MainActivity).quranViewModel
+        settingViewModel = (activity as MainActivity).settingViewModel
+
         ayahAdapter = (activity as MainActivity).ayahAdapter
 
         bottomSheetDialog = BottomSheetDialog(requireContext())
@@ -85,17 +89,27 @@ class SurahContentFragment : Fragment() {
         initRecyclerView()
         viewSurahList(surahItem.id!!)
         setupSpinnerSelection()
+
+        observeFontSize()
+    }
+    // This function observes the fontSize LiveData and updates the adapter whenever it changes.
+    private fun observeFontSize() {
+        settingViewModel.fontSize.observe(viewLifecycleOwner) { fontSize ->
+            Log.d("MYTAG", "FontSize received in Activity: $fontSize")
+            // Update the font size in the AyahAdapter
+            ayahAdapter.updateFontSize(fontSize)
+        }
     }
 
     private fun showBottomSheet(surahContentItem: SurahContentItem) {
         bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.NoOverlayDialog).apply {
             val binding = BottomSheetBinding.inflate(LayoutInflater.from(context))
             setContentView(binding.root)
-            viewModel.fetchAllBookmarks()
+            quranViewModel.fetchAllBookmarks()
             // Observe current bookmarks
 
             val favoriteItem = FavoriteItem.fromSurahContentItem(surahContentItem)
-            val isBookmarked = viewModel.bookmarks.value.any { it.id == favoriteItem.id }
+            val isBookmarked = quranViewModel.bookmarks.value.any { it.id == favoriteItem.id }
 
             with(binding) {
                 dragHandle.setOnClickListener { dismiss() }
@@ -117,8 +131,8 @@ class SurahContentFragment : Fragment() {
                         layoutBookmark.text = getString(R.string.remove_bookmark)
                         layoutBookmark.setIconResource(R.drawable.ic_bookmark_remove)
                         layoutBookmark.setOnClickListener {
-                            viewModel.removeBookmark(favoriteItem)
-                            viewModel.fetchAllBookmarks()
+                            quranViewModel.removeBookmark(favoriteItem)
+                            quranViewModel.fetchAllBookmarks()
                             Toast.makeText(requireContext(), getString(R.string.bookmark_removed), Toast.LENGTH_SHORT).show()
                             dismiss()
                         }
@@ -126,8 +140,8 @@ class SurahContentFragment : Fragment() {
                         layoutBookmark.text = getString(R.string.add_bookmark)
                         layoutBookmark.setIconResource(R.drawable.ic_bookmark_border)
                         layoutBookmark.setOnClickListener {
-                            viewModel.addBookmark(favoriteItem)
-                            viewModel.fetchAllBookmarks()
+                            quranViewModel.addBookmark(favoriteItem)
+                            quranViewModel.fetchAllBookmarks()
                             Toast.makeText(requireContext(), getString(R.string.bookmark_added), Toast.LENGTH_SHORT).show()
                             dismiss()
                         }
@@ -147,11 +161,6 @@ class SurahContentFragment : Fragment() {
                     Toast.makeText(requireContext(), item, Toast.LENGTH_LONG).show()
 
                     val itemScroll = item.toIntOrNull() ?: return
-//                    fragmentSurahContentBinding.ayahRecyclerView.layoutManager?.let { layoutManager ->
-//                        if (layoutManager is LinearLayoutManager) {
-//                            layoutManager.scrollToPositionWithOffset(itemScroll, 0)
-//                        }
-//                    }
                     scrollToAyahPosition(itemScroll)
                 }
 
@@ -180,12 +189,12 @@ class SurahContentFragment : Fragment() {
     }
 
     private fun viewSurahList(surahId:Int) {
-        viewModel.fetchSurahContent(surahId) // Start fetching
+        quranViewModel.fetchSurahContent(surahId) // Start fetching
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 // Wait for content to be loaded
-                viewModel.surahContent.collect { ayahs ->
+                quranViewModel.surahContent.collect { ayahs ->
                     setAyahNumToSpinner(ayahs)
 
                     val modifiedAyahs = ayahs.toMutableList()
@@ -198,7 +207,7 @@ class SurahContentFragment : Fragment() {
                     }
                     ayahAdapter.differ.submitList(modifiedAyahs) {
                         // ✅ Callback after list is submitted — now safe to scroll
-                        viewModel.scrollToAyah.value?.let { scrollToAyahPosition(it) }
+                        quranViewModel.scrollToAyah.value?.let { scrollToAyahPosition(it) }
                     }
                 }
             }
@@ -219,11 +228,24 @@ class SurahContentFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> {
-                //Toast.makeText(requireContext(), "Settings clicked", Toast.LENGTH_SHORT).show()
+            R.id.action_zoom_in -> {
+                val currentFontSize = settingViewModel.fontSize.value ?: 16f
+                val newFontSize = (currentFontSize + 2).coerceAtMost(40f)  // Increase font size but limit to max 40
+                settingViewModel.setFontSize(newFontSize)
+                observeFontSize()
+                Toast.makeText(requireContext(), "Zoom In clicked", Toast.LENGTH_SHORT).show()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+
+            R.id.action_zoom_out -> {
+                val currentFontSize = settingViewModel.fontSize.value ?: 16f
+                val newFontSize = (currentFontSize - 2).coerceAtLeast(16f)  // Decrease font size but limit to min 16
+                settingViewModel.setFontSize(newFontSize)
+                observeFontSize()
+                Toast.makeText(requireContext(), "Zoom Out clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item) // Handle other menu items
         }
     }
 }
