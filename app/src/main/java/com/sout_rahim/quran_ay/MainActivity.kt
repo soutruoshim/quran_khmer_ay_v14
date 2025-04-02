@@ -45,6 +45,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.math.ln
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -150,12 +151,21 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
+
         // Observe dark mode changes
         settingViewModel.isDarkMode.observe(this, Observer { isDarkMode ->
             // Apply the theme based on the dark mode preference
             AppCompatDelegate.setDefaultNightMode(
                 if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
             )
+        })
+
+        // Observe the language change in ViewModel
+        settingViewModel.currentLanguage.observe(this, Observer { language ->
+            // Update the locale when language changes
+            LocaleHelper.setLocale(this, language)
+            // Recreate the activity to apply the new locale
         })
 
 
@@ -203,13 +213,7 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
-        // Observe the language change in ViewModel
-        settingViewModel.currentLanguage.observe(this, Observer { language ->
-            // Update the locale when language changes
-            LocaleHelper.setLocale(this, language)
-            // Optionally, restart the activity to apply the changes
-            //recreate()  // This will restart the activity to apply the locale change
-        })
+
     }
 
 
@@ -321,12 +325,10 @@ class MainActivity : AppCompatActivity() {
 
         LocaleHelper.setLocale(this, lang)
         Log.d("MYTAG", lang)
-
         // Refresh the activity to apply the new language
         val intent = intent
         finish()
         startActivity(intent)
-        onRestart()
     }
     override fun onDestroy() {
         super.onDestroy()
@@ -335,8 +337,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRestart() {
-        super.onRestart()
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, LocaleHelper.getLanguage(newBase)))
     }
 
 }

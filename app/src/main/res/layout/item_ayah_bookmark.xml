@@ -8,6 +8,7 @@
     android:background="?android:attr/selectableItemBackground"
     android:focusable="true"
     android:orientation="vertical"
+    android:layoutDirection="ltr"
     android:id="@+id/layoutBookmark">
 
     <!-- Replaced RelativeLayout with ConstraintLayout (AndroidX) -->

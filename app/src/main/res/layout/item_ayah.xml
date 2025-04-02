@@ -6,13 +6,15 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:orientation="vertical"
-    android:focusable="true">
+    android:focusable="true"
+    android:layoutDirection="ltr">
 
     <!-- Replaced RelativeLayout with ConstraintLayout (AndroidX) -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
+        android:layoutDirection="ltr"
         android:paddingBottom="5dp">
         <!-- Expand/Collapse Button -->
         <ImageButton
@@ -37,6 +39,7 @@
         android:padding="5dp"
         android:textIsSelectable="true"
         android:textSize="22sp"
+        android:layoutDirection="ltr"
         tools:text="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" />
 
     <!-- Translation Text -->
@@ -48,5 +51,6 @@
         android:layout_marginBottom="5dp"
         android:textIsSelectable="true"
         android:textSize="16sp"
+        android:layoutDirection="rtl"
         tools:text="In the name of Allah, the Most Gracious, the Most Merciful." />
 </LinearLayout>
