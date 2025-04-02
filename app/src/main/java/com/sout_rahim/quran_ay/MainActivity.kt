@@ -1,8 +1,10 @@
 package com.sout_rahim.quran_ay
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -31,6 +33,7 @@ import com.sout_rahim.quran_ay.data.model.FavoriteItem
 import com.sout_rahim.quran_ay.data.model.SurahContentItem
 import com.sout_rahim.quran_ay.databinding.ActivityMainBinding
 import com.sout_rahim.quran_ay.databinding.BottomSheetBinding
+import com.sout_rahim.quran_ay.databinding.BottomSheetFeedbackBinding
 import com.sout_rahim.quran_ay.databinding.BottomSheetLanguageBinding
 import com.sout_rahim.quran_ay.presentation.adapter.AyahAdapter
 import com.sout_rahim.quran_ay.presentation.adapter.AyahBookmarkAdapter
@@ -40,6 +43,9 @@ import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModelFactory
 import com.sout_rahim.quran_ay.presentation.viewmodel.SettingViewModel
 import com.sout_rahim.quran_ay.presentation.viewmodel.SettingViewModelFactory
 import com.sout_rahim.quran_ay.util.Helper
+import com.sout_rahim.quran_ay.util.Helper.moreApp
+import com.sout_rahim.quran_ay.util.Helper.rateApp
+import com.sout_rahim.quran_ay.util.Helper.shareApp
 import com.sout_rahim.quran_ay.util.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -84,7 +90,8 @@ class MainActivity : AppCompatActivity() {
 
         bottomSheetDialog = BottomSheetDialog(applicationContext)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         // Find DrawerLayout and NavigationView
@@ -109,19 +116,33 @@ class MainActivity : AppCompatActivity() {
                 menuItem.isChecked = true
                 drawerLayout.close()
                 when (menuItem.itemId) {
-                    R.id.nav_menu_bookmark ->{
+                    R.id.nav_menu_bookmark -> {
                         navController.navigate(R.id.bookmarkFragment)
                         searchBar.visibility = View.GONE // Hide SearchBar in Second Fragment
                     }
-                    R.id.nav_menu_language -> {
-                        //navController.navigate(R.id.action_homeFragment_to_detailFragment)
-                        searchBar.visibility = View.GONE // Hide SearchBar in Second Fragment
-                        showBottomSheet()
 
-                    } R.id.nav_menu_language -> {
-                    //navController.navigate(R.id.action_homeFragment_to_settingFragment)
-                    //searchBar.visibility = View.GONE // Hide SearchBar in Second Fragment
-                }
+                    R.id.nav_menu_language -> {
+                        //searchBar.visibility = View.GONE // Hide SearchBar in Second Fragment
+                        showBottomSheet()
+                    }
+                    R.id.nav_menu_help -> {
+                        showBottomSheetFeedback()
+                    }
+                    R.id.nav_menu_about -> {
+                        navController.navigate(R.id.aboutFragment)
+                    }
+
+                    R.id.nav_menu_share -> {
+                        shareApp()
+                    }
+                    R.id.nav_menu_rate -> {
+                        rateApp()
+                    }
+                    R.id.nav_menu_more -> {
+                        moreApp()
+                    }
+
+
                     else -> {
                         // Show CoordinatorLayout for other fragments
                         searchBar.visibility = View.VISIBLE
@@ -134,7 +155,7 @@ class MainActivity : AppCompatActivity() {
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 if (destination.id == R.id.surahFragment) {
                     searchBar.visibility = View.VISIBLE
-                }else{
+                } else {
                     searchBar.visibility = View.GONE
                 }
             }
@@ -142,15 +163,14 @@ class MainActivity : AppCompatActivity() {
 
 
         quranViewModel = ViewModelProvider(this, quranViewModelFactory)[QuranViewModel::class.java]
-        settingViewModel = ViewModelProvider(this, settingViewModelFactory)[SettingViewModel::class.java]
+        settingViewModel =
+            ViewModelProvider(this, settingViewModelFactory)[SettingViewModel::class.java]
 
-                // Fetch Surahs
+        // Fetch Surahs
         settingViewModel.loadSettings()
         settingViewModel.fontSize.observe(this) { fontSize ->
             println("FontSize received in Activity: $fontSize")
         }
-
-
 
 
         // Observe dark mode changes
@@ -169,7 +189,6 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-
         // Find the switch and set its state
         val headerView = navigationView.getHeaderView(0) // Access header view
         val themeSwitch = headerView.findViewById<Switch>(R.id.theme_switch)
@@ -183,35 +202,6 @@ class MainActivity : AppCompatActivity() {
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             settingViewModel.toggleDarkMode(isChecked)
         }
-
-
-
-//        // Fetch Surahs
-//           viewModel.fetchAllSurahs()
-//        // Observe Surah List
-//                lifecycleScope.launch {
-//                    viewModel.surahs.collect { surahList ->
-//                        println("Surahs received in Activity: $surahList")
-//                    }
-//                }
-
-        //Fetch Surah Content
-//        viewModel.fetchSurahContent(1)
-//        // Observe Surah Content
-//        lifecycleScope.launch {
-//            viewModel.surahContent.collect { contentList ->
-//                println("Surah Content received in UI: $contentList") // Log in UI
-//            }
-//        }
-
-       // Observe Bookmarks
-//        viewModel.fetchAllBookmarks()
-//        lifecycleScope.launch {
-//            viewModel.bookmarks.collect { bookmarks ->
-//                println("Bookmarks received in UI: $bookmarks") // Log in UI
-//            }
-//        }
-
 
 
     }
@@ -234,7 +224,8 @@ class MainActivity : AppCompatActivity() {
                 val queryText = textView.text.toString()
                 searchBar.setText(queryText)
 
-                Toast.makeText(applicationContext, "You Entered: $queryText", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "You Entered: $queryText", Toast.LENGTH_LONG)
+                    .show()
 
                 // Hide the SearchView
                 searchView.hide()
@@ -253,9 +244,11 @@ class MainActivity : AppCompatActivity() {
             setContentView(binding.root)
             // Add a function to directly get the current language (e.g., for a different use case)
             // Observe current language and set button backgrounds accordingly
-            settingViewModel.currentLanguage.observe(this@MainActivity, Observer { currentLanguage ->
-                updateLanguageButtons(currentLanguage, binding)
-            })
+            settingViewModel.currentLanguage.observe(
+                this@MainActivity,
+                Observer { currentLanguage ->
+                    updateLanguageButtons(currentLanguage, binding)
+                })
 
             // Handle language selection
             binding.btnEnglish.setOnClickListener {
@@ -267,28 +260,40 @@ class MainActivity : AppCompatActivity() {
             binding.btnArabic.setOnClickListener {
                 changeLanguage("ar")  // Set language to Arabic
             }
+        }
+        bottomSheetDialog.show()
+    }
 
-//            // Handle language selection
-//            binding.btnEnglish.setOnClickListener {
-//                settingViewModel.setLanguage("en")  // Set language to English
-//                dismiss()
-//            }
-//            binding.btnKhmer.setOnClickListener {
-//                settingViewModel.setLanguage("km")  // Set language to Khmer
-//                dismiss()
-//            }
-//            binding.btnArabic.setOnClickListener {
-//                settingViewModel.setLanguage("ar")  // Set language to Arabic
-//                dismiss()
-//            }
+    private fun showBottomSheetFeedback() {
+        bottomSheetDialog = BottomSheetDialog(this, R.style.NoOverlayDialog).apply {
+            val binding = BottomSheetFeedbackBinding.inflate(LayoutInflater.from(context))
+            setContentView(binding.root)
+            // Handle language selection
+            binding.btnSend.setOnClickListener {
+                val commandbox = binding.messageInput.text // assuming 'commandbox' is the EditText ID
 
+                // Create the Intent to send email
+                val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", "sout.rahim@gmail.com", null))
 
+                // Add email subject
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+
+                // Add the message body text
+                emailIntent.putExtra(Intent.EXTRA_TEXT, commandbox.toString())
+
+                // Start the activity for sending email with chooser
+                startActivity(Intent.createChooser(emailIntent, "Send email..."))
+            }
         }
         bottomSheetDialog.show()
     }
 
     // Update button backgrounds based on the selected language
-    private fun updateLanguageButtons(currentLanguage: String, binding: BottomSheetLanguageBinding) {
+    private fun updateLanguageButtons(
+        currentLanguage: String,
+        binding: BottomSheetLanguageBinding
+    ) {
         // Reset all icons first
         resetButtonIcons(binding)
 
@@ -298,9 +303,11 @@ class MainActivity : AppCompatActivity() {
             "en" -> {
                 binding.btnEnglish.setIconResource(R.drawable.ic_checked_circle)  // Set active button
             }
+
             "km" -> {
                 binding.btnKhmer.setIconResource(R.drawable.ic_checked_circle)  // Set active button
             }
+
             "ar" -> {
                 binding.btnArabic.setIconResource(R.drawable.ic_checked_circle)  // Set active button
             }
@@ -315,10 +322,6 @@ class MainActivity : AppCompatActivity() {
         binding.btnArabic.setIconResource(R.drawable.ic_check_circle)
     }
 
-//    override fun attachBaseContext(newBase: Context) {
-//        super.attachBaseContext(LocaleHelper.setLocale(newBase, LocaleHelper.getLanguage(newBase)))
-//    }
-
     // Method to handle language change and restart the activity
     private fun changeLanguage(lang: String) {
         settingViewModel.setLanguage(lang)
@@ -330,6 +333,7 @@ class MainActivity : AppCompatActivity() {
         finish()
         startActivity(intent)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         if (::bottomSheetDialog.isInitialized && bottomSheetDialog.isShowing) {

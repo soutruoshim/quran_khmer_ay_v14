@@ -33,5 +33,27 @@
     <string name="english">English</string>
     <string name="khmer">Khmer</string>
     <string name="arabic">Arabic</string>
+    <string name="confirm_clear_all">Confirm clear all</string>
+    <string name="are_you_sure_clear_all">Are you sure clear all?</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="enter_message">Enter your message</string>
+    <string name="send">Send</string>
+    <string name="about">About</string>
+    <string name="app_name_khmer">Quran Khmer</string>
+    <string name="quran_text1">Quran Khmer</string>
+    <string name="version">Version 14.0</string>
+    <string name="app_feature">App Feature</string>
+    <string name="quran_translate">Quran Translate by CMCD (Ahmad Yahya)</string>
+    <string name="quran_search">2 in 1 Quran search</string>
+    <string name="total_surahs">Total Surah :114</string>
+    <string name="total_ayat">Total Ayat :6236</string>
+    <string name="developer">Developer</string>
+    <string name="developer_name">Designed and Developed by Sout Rahim</string>
+    <string name="developer_email">Email: sout.rahim@gmail.com</string>
+    <string name="developer_facebook">Facebook: Sout Rahim</string>
+    <string name="contact_associate">Contact Associate</string>
+    <string name="contact_email">Email: quraan.cambodia@gmail.com</string>
+    <string name="copyright">Copyright © 2016-2025</string>
 
 </resources>

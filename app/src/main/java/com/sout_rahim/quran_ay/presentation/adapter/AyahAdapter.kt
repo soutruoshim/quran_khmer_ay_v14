@@ -69,7 +69,6 @@ class AyahAdapter:RecyclerView.Adapter<AyahAdapter.SurahViewHolder>() {
                 binding.translateText.text =  surahContentItem.AyahTextKhmer + "\t[អាយ៉ះទី("+surahContentItem.VerseID+")]";
             }
 
-
             applyCustomFonts(binding)
 
             // Set font size dynamically from the ViewModel

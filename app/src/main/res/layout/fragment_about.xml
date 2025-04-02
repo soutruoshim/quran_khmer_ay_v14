@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:layout_marginTop="0dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:layout_marginBottom="15dp"
+            android:textAlignment="center"
+            android:text="@string/app_name"
+            android:id="@+id/quran_text1" />
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/imageView2"
+            android:src="@mipmap/ic_launcher"
+            android:paddingBottom="15dp"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="@string/version"
+            android:textAlignment="center"
+            android:textSize="16sp" />
+
+        <!-- App feature-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="center"
+            android:text="@string/app_feature" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:text="@string/quran_translate" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:text="@string/quran_search" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:text="@string/total_surahs" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:layout_marginBottom="15dp"
+            android:text="@string/total_ayat" />
+
+        <!-- Developer-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="center"
+            android:text="@string/developer" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:text="@string/developer_name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:text="@string/developer_email" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:layout_marginBottom="15dp"
+            android:text="@string/developer_facebook" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="center"
+            android:text="@string/contact_associate" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="2dp"
+            android:layout_marginBottom="18dp"
+            android:textAlignment="center"
+            android:text="@string/contact_email" />
+
+        <View
+            android:background="?attr/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginBottom="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"/>
+
+        <!-- Copyright-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="30dp"
+            android:padding="2dp"
+            android:text="@string/copyright"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="16sp" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

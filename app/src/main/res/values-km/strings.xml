@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">អាល់កូរ៉ាអាខ្មែរ</string>
+    <string name="app_name">អាល់គួរអានខ្មែរ</string>
     <!-- Strings used for fragments for navigation -->
     <string name="surah_fragment_label">ផ្នែកទី១</string>
     <string name="surah_content_fragment_label">សូរ៉ាហ៍</string>
@@ -14,7 +14,7 @@
     <string name="menu_more">កម្មវិធីផ្សេងទៀត</string>
     <string name="menu_other_options">ផ្សេងទៀត</string>
     <string name="menu_settings">ការកំណត់</string>
-    <string name="quran_translate_to_khmer">ការបកប្រែអាល់កូរ៉ាដល់ខ្មែរ</string>
+    <string name="quran_translate_to_khmer">ការបកប្រែអាល់គួរអានជាភាសាខ្មែរ</string>
     <string name="dark_mode">របៀបងងឹត</string>
     <string name="search_here">ស្វែងរកទីនេះ</string>
     <string name="copied_text">បានចម្លង</string>
@@ -32,5 +32,27 @@
     <string name="languages">ភាសា</string>
     <string name="english">អង់គ្លេស</string>
     <string name="khmer">ខ្មែរ</string>
-    <string name="arabic">អារ៉ាបិច</string>
+    <string name="arabic">អារ៉ាប់</string>
+    <string name="confirm_clear_all">បញ្ជាក់ការលុបទាំងអស់</string>
+    <string name="are_you_sure_clear_all">តើអ្នកប្រាកដក្នុងការលុបទាំងអស់ទេ?</string>
+    <string name="cancel">បោះបង់</string>
+    <string name="confirm">បញ្ជាក់</string>
+    <string name="enter_message">បញ្ចូលសាររបស់អ្នក</string>
+    <string name="send">ផ្ញើ</string>
+    <string name="about">អំពី</string>
+    <string name="app_name_khmer">គួរអានខ្មែរ</string>
+    <string name="quran_text1">Quran Khmer</string>
+    <string name="version">កំណែ 14.0</string>
+    <string name="app_feature">មុខងារពីកម្មវិធី</string>
+    <string name="quran_translate">ការបកប្រែខ័រហានដោយ CMCD (Ahmad Yahya)</string>
+    <string name="quran_search">ការស្វែងរក 2 ក្នុង 1 ខ័រហាន</string>
+    <string name="total_surahs">សូរ សរុប: 114</string>
+    <string name="total_ayat">អាយ៉ាត សរុប: 6236</string>
+    <string name="developer">អ្នកអភិវឌ្ឍ</string>
+    <string name="developer_name">រចនានិងអភិវឌ្ឍដោយ ស៊ូត រស់ហុីម</string>
+    <string name="developer_email">អ៊ីមែល: sout.rahim@gmail.com</string>
+    <string name="developer_facebook">ហ្វេសប៊ុក: Sout Rahim</string>
+    <string name="contact_associate">ទំនាក់ទំនងអ្នកសហការី</string>
+    <string name="contact_email">អ៊ីមែល: quraan.cambodia@gmail.com</string>
+    <string name="copyright">សិទ្ធិប្រើប្រាស់ © 2016-2025</string>
 </resources>

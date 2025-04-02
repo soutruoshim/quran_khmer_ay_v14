@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/transparent">
+
+    <FrameLayout
+        android:id="@+id/standardBottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface">
+
+        <!-- Card View for Dialog -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="36dp"
+            app:cardElevation="0.5dp"
+            app:strokeColor="?attr/colorOutline"
+            app:strokeWidth="0.3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="?attr/colorSurfaceContainer">
+
+                <!-- Title TextView -->
+                <TextView
+                    android:id="@+id/confirmationTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/confirm_clear_all"
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Message TextView -->
+                <TextView
+                    android:id="@+id/confirmationMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/are_you_sure_clear_all"
+                    android:textSize="16sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:gravity="center"
+                    android:layout_marginBottom="24dp"/>
+
+                <!-- Buttons Layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:weightSum="2">
+
+                    <!-- Cancel Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCancel"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="126dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cancel"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_cancel"
+                        app:iconPadding="8dp"
+                        app:iconTint="?attr/colorOnSurface"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center|start"
+                        android:paddingEnd="16dp" />
+
+                    <!-- Confirm Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnConfirm"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="126dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/confirm"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_checked_circle"
+                        app:iconPadding="8dp"
+                        app:iconTint="?attr/colorOnSurface"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center|start"
+                        android:paddingEnd="8dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

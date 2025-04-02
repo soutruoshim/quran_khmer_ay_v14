@@ -33,5 +33,27 @@
     <string name="english">الإنجليزية</string>
     <string name="khmer">الخمير</string>
     <string name="arabic">العربية</string>
+    <string name="confirm_clear_all">تأكيد حذف الكل</string>
+    <string name="are_you_sure_clear_all">هل أنت متأكد من حذف الكل؟</string>
+    <string name="cancel">إلغاء</string>
+    <string name="confirm">تأكيد</string>
+    <string name="enter_message">أدخل رسالتك</string>
+    <string name="send">إرسال</string>
+    <string name="about">عن</string>
+    <string name="app_name_khmer">اقرأ بالخط الكمبودي</string>
+    <string name="quran_text1">القرآن الكمبودي</string>
+    <string name="version">الإصدار 14.0</string>
+    <string name="app_feature">مميزات التطبيق</string>
+    <string name="quran_translate">ترجمة القرآن بواسطة CMCD (أحمد يحيى)</string>
+    <string name="quran_search">بحث القرآن 2 في 1</string>
+    <string name="total_surahs">إجمالي السور: 114</string>
+    <string name="total_ayat">إجمالي الآيات: 6236</string>
+    <string name="developer">المطور</string>
+    <string name="developer_name">تم التصميم والتطوير بواسطة سوت رحيم</string>
+    <string name="developer_email">البريد الإلكتروني: sout.rahim@gmail.com</string>
+    <string name="developer_facebook">فيسبوك: Srh DP</string>
+    <string name="contact_associate">الاتصال بالمنسق</string>
+    <string name="contact_email">البريد الإلكتروني: quraan.cambodia@gmail.com</string>
+    <string name="copyright">حقوق النشر © 2016-2025</string>
 
 </resources>

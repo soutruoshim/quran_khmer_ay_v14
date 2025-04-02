@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import com.sout_rahim.quran_ay.R
 import com.sout_rahim.quran_ay.data.model.SurahContentItem
@@ -54,6 +55,37 @@ object Helper {
         return mutableListOf<String>().apply {
             add(Constants.AYAH_TEXT) // Add header label
             surahContentList.forEach { add(it.VerseID.toString()) } // Extract VerseID
+        }
+    }
+
+    // Function to rate the app
+    fun Context.rateApp() {
+        try {
+            val uri = Uri.parse("market://details?id=${packageName}")
+            val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(goToMarket)
+        } catch (e: Exception) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=$packageName")))
+        }
+    }
+
+    // Function to share the app link
+    fun Context.shareApp() {
+        val share = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Share this app")
+            putExtra(Intent.EXTRA_TEXT, "http://play.google.com/store/apps/details?id=$packageName")
+        }
+        startActivity(Intent.createChooser(share, "Share link Download!"))
+    }
+
+    // Function to open more apps from the developer
+    fun Context.moreApp() {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=Srh%20Dp&hl=en"))
+            startActivity(intent)
+        } catch (e: Exception) {
+            // Handle exception if needed
         }
     }
 }

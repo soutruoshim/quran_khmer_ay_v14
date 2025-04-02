@@ -9,16 +9,22 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.sout_rahim.quran_ay.data.model.FavoriteItem
+import com.sout_rahim.quran_ay.data.model.SurahContentItem
+import com.sout_rahim.quran_ay.databinding.BottomSheetBinding
+import com.sout_rahim.quran_ay.databinding.BottomSheetDeleteBookmarkBinding
 import com.sout_rahim.quran_ay.databinding.FragmentBookmarkBinding
 import com.sout_rahim.quran_ay.presentation.adapter.AyahBookmarkAdapter
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
 import com.sout_rahim.quran_ay.presentation.viewmodel.SettingViewModel
+import com.sout_rahim.quran_ay.util.Helper
 import kotlinx.coroutines.launch
 
 class BookmarkFragment : Fragment() {
@@ -26,6 +32,7 @@ class BookmarkFragment : Fragment() {
     private  lateinit var quranViewModel: QuranViewModel
     private lateinit var settingViewModel: SettingViewModel
     private lateinit var ayahBookmarkAdapter: AyahBookmarkAdapter
+    private lateinit var bottomSheetDialog: BottomSheetDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +51,7 @@ class BookmarkFragment : Fragment() {
 
         ayahBookmarkAdapter = (activity as MainActivity).ayahBookmarkAdapter
 
+        bottomSheetDialog = BottomSheetDialog(requireContext())
 
         ayahBookmarkAdapter.setOnBookmarkClickListener {
             val favoriteItem = FavoriteItem.fromSurahContentItem(it)
@@ -73,6 +81,24 @@ class BookmarkFragment : Fragment() {
         initRecyclerView()
         viewBookmarkList()
         observeFontSize()
+    }
+
+    private fun showBottomSheet() {
+        bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.NoOverlayDialog).apply {
+            val binding = BottomSheetDeleteBookmarkBinding.inflate(LayoutInflater.from(context))
+            setContentView(binding.root)
+
+            with(binding) {
+                btnCancel.setOnClickListener {
+                    dismiss()
+                }
+                btnConfirm.setOnClickListener {
+                   quranViewModel.removeAllBookmarks()
+                    dismiss()
+                }
+            }
+        }
+        bottomSheetDialog.show()
     }
 
     // This function observes the fontSize LiveData and updates the adapter whenever it changes.
@@ -116,8 +142,8 @@ class BookmarkFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> {
-                //Toast.makeText(requireContext(), "Settings clicked", Toast.LENGTH_SHORT).show()
+            R.id.action_clear_bookmark -> {
+                showBottomSheet()
                 true
             }
             else -> super.onOptionsItemSelected(item)
