@@ -12,7 +12,7 @@ interface QuranAyahDAO {
     fun getSurahContent(surahId: Int): Flow<List<SurahContentItem>>
 
     // Search content by Ayah text, Khmer translation, or Surah name
-    @Query("SELECT * FROM Quran_Ayah WHERE AyahText LIKE '%' || :query || '%' OR AyahTextKhmer LIKE '%' || :query || '%' OR SurahName LIKE '%' || :query || '%'")
+    @Query("SELECT * FROM Quran_Ayah WHERE AyahNormal LIKE '%' || :query || '%' OR AyahTextKhmer LIKE '%' || :query || '%' OR SurahName LIKE '%' || :query || '%'")
     fun searchContent(query: String): Flow<List<SurahContentItem>>
 
     // Get a specific Ayah by its unique index (VerseID)

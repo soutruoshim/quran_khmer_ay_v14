@@ -47,6 +47,7 @@ object Constants {
         "\u0059", "\u0061", "\u0063", "\u0065"
     )
 
+
     fun getFontForSurah(surahID: Int): String {
         return when {
             surahID <= 31 -> "ar-ALHAWE_QURAN_1_31.ttf"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">អាល់គួរអានខ្មែរ</string>
+    <string name="app_name">គួរអានខ្មែរ</string>
     <!-- Strings used for fragments for navigation -->
     <string name="surah_fragment_label">ផ្នែកទី១</string>
     <string name="surah_content_fragment_label">សូរ៉ាហ៍</string>
@@ -44,9 +44,9 @@
     <string name="quran_text1">Quran Khmer</string>
     <string name="version">កំណែ 14.0</string>
     <string name="app_feature">មុខងារពីកម្មវិធី</string>
-    <string name="quran_translate">ការបកប្រែខ័រហានដោយ CMCD (Ahmad Yahya)</string>
-    <string name="quran_search">ការស្វែងរក 2 ក្នុង 1 ខ័រហាន</string>
-    <string name="total_surahs">សូរ សរុប: 114</string>
+    <string name="quran_translate">បកប្រែគម្ពីគួរអានដោយ CMCD (Ahmad Yahya)</string>
+    <string name="quran_search">ការស្វែងរក 2 ក្នុង 1</string>
+    <string name="total_surahs">សូរ៉ាហ៍ សរុប: 114</string>
     <string name="total_ayat">អាយ៉ាត សរុប: 6236</string>
     <string name="developer">អ្នកអភិវឌ្ឍ</string>
     <string name="developer_name">រចនានិងអភិវឌ្ឍដោយ ស៊ូត រស់ហុីម</string>
@@ -55,4 +55,6 @@
     <string name="contact_associate">ទំនាក់ទំនងអ្នកសហការី</string>
     <string name="contact_email">អ៊ីមែល: quraan.cambodia@gmail.com</string>
     <string name="copyright">សិទ្ធិប្រើប្រាស់ © 2016-2025</string>
+    <string name="section_surahs">សូរ៉ាហ៍</string>
+    <string name="section_ayahs">អាយ៉ះ</string>
 </resources>

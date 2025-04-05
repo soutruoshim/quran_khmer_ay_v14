@@ -40,7 +40,7 @@
             app:useDrawerArrowDrawable="true"
             android:hint="@string/search_here">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/searchRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_theme_background"

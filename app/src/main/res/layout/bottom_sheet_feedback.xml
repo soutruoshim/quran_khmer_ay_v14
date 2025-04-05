@@ -60,7 +60,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSend"
                     style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/send"
                     android:textColor="?attr/colorOnSurface"
@@ -69,7 +69,7 @@
                     app:iconPadding="16dp"
                     app:iconTint="?attr/colorOnSurface"
                     android:layout_marginTop="8dp"
-                    android:gravity="center|start"/>
+                    android:gravity="end"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

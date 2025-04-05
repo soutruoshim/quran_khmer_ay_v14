@@ -69,8 +69,6 @@ class SurahAdapter:RecyclerView.Adapter<SurahAdapter.SurahViewHolder>() {
             }
             //uthman
 
-
-
             binding.root.setOnClickListener {
                 onItemClickListener?.let {
                     it(surahItem)

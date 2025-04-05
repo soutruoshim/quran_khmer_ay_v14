@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:layoutDirection="ltr"
+    android:id="@+id/layoutBookmark">
+
+    <!-- Replaced RelativeLayout with ConstraintLayout (AndroidX) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+
+        <!-- Expand/Collapse Button -->
+        <ImageButton
+            android:id="@+id/btnAction"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_bookmark_remove"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_bookmark_remove"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <TextView
+                android:id="@+id/extraText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Extra"
+                android:textSize="16sp"
+                android:layout_marginStart="4dp" />
+            <TextView
+                android:id="@+id/surahText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Surah Text"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- Ayah Arabic Text -->
+    <TextView
+        android:id="@+id/ayahText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:padding="5dp"
+        android:textSize="22sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        tools:text="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ" />
+
+    <!-- Translation Text -->
+    <TextView
+        android:id="@+id/translateText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="16sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        tools:text="In the name of Allah, the Most Gracious, the Most Merciful." />
+</LinearLayout>

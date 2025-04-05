@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">القرآن الخمير</string>
+    <string name="app_name">القرآن الكريم باللغة الخميرية</string>
     <!-- Strings used for fragments for navigation -->
     <string name="surah_fragment_label">الشريحة الأولى</string>
     <string name="surah_content_fragment_label">سورة</string>
     <string name="next">التالي</string>
     <string name="previous">السابق</string>
 
-    <string name="menu_bookmark">الإشارات المرجعية</string>
+    <string name="menu_bookmark">العلامات</string>
     <string name="menu_help">المساعدة والتعليقات</string>
     <string name="menu_about">حول التطبيق</string>
     <string name="menu_share">مشاركة التطبيق</string>
@@ -14,7 +14,7 @@
     <string name="menu_more">المزيد من التطبيقات</string>
     <string name="menu_other_options">أخرى</string>
     <string name="menu_settings">الإعدادات</string>
-    <string name="quran_translate_to_khmer">ترجمة القرآن إلى الخمير</string>
+    <string name="quran_translate_to_khmer">ترجمة القرآن إلى الخميرية</string>
     <string name="dark_mode">الوضع الداكن</string>
     <string name="search_here">ابحث هنا</string>
     <string name="copied_text">تم النسخ</string>
@@ -39,7 +39,7 @@
     <string name="confirm">تأكيد</string>
     <string name="enter_message">أدخل رسالتك</string>
     <string name="send">إرسال</string>
-    <string name="about">عن</string>
+    <string name="about">حول التطبيق</string>
     <string name="app_name_khmer">اقرأ بالخط الكمبودي</string>
     <string name="quran_text1">القرآن الكمبودي</string>
     <string name="version">الإصدار 14.0</string>
@@ -51,9 +51,11 @@
     <string name="developer">المطور</string>
     <string name="developer_name">تم التصميم والتطوير بواسطة سوت رحيم</string>
     <string name="developer_email">البريد الإلكتروني: sout.rahim@gmail.com</string>
-    <string name="developer_facebook">فيسبوك: Srh DP</string>
+    <string name="developer_facebook">فيسبوك: Sout Rahim</string>
     <string name="contact_associate">الاتصال بالمنسق</string>
     <string name="contact_email">البريد الإلكتروني: quraan.cambodia@gmail.com</string>
     <string name="copyright">حقوق النشر © 2016-2025</string>
+    <string name="section_surahs">السور</string>
+    <string name="section_ayahs">الآيات</string>
 
 </resources>
