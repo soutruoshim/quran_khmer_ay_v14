@@ -114,7 +114,6 @@ class MainActivity : AppCompatActivity() {
         // Link NavController with ActionBar (optional)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-
         // navigation menu item click
         binding.apply {
             navigationView.setNavigationItemSelectedListener { menuItem ->
@@ -146,8 +145,6 @@ class MainActivity : AppCompatActivity() {
                     R.id.nav_menu_more -> {
                         moreApp()
                     }
-
-
                     else -> {
                         // Show CoordinatorLayout for other fragments
                         searchBar.visibility = View.VISIBLE
@@ -177,7 +174,6 @@ class MainActivity : AppCompatActivity() {
             println("FontSize received in Activity: $fontSize")
         }
 
-
         // Observe dark mode changes
         settingViewModel.isDarkMode.observe(this, Observer { isDarkMode ->
             // Apply the theme based on the dark mode preference
@@ -193,7 +189,6 @@ class MainActivity : AppCompatActivity() {
             // Recreate the activity to apply the new locale
         })
 
-
         // Find the switch and set its state
         val headerView = navigationView.getHeaderView(0) // Access header view
         val themeSwitch = headerView.findViewById<Switch>(R.id.theme_switch)
@@ -208,9 +203,7 @@ class MainActivity : AppCompatActivity() {
             settingViewModel.toggleDarkMode(isChecked)
         }
 
-
         //=========adapter click
-
         mixedAdapter.setOnAyahClickListener {
             Log.d("selectedSurah", "Selected Surah: click on ayah")
             lifecycleScope.launch {
@@ -223,9 +216,6 @@ class MainActivity : AppCompatActivity() {
                     putSerializable("selected_surah", selectedSurah)
                 }
 
-//                withContext(Dispatchers.Main) {
-//                    navController.navigate(R.id.surahContentFragment, bundle)
-//                }
                 navController.navigate(R.id.surahContentFragment,bundle)
                 binding.searchView.hide()
             }
@@ -290,7 +280,6 @@ class MainActivity : AppCompatActivity() {
 
                 // Perform your action, e.g., filtering a list, showing suggestions
                 //Toast.makeText(applicationContext, "Query: $queryText", Toast.LENGTH_SHORT).show()
-
             }
 
             // Listen for the Enter key press (finalized search)
@@ -348,17 +337,12 @@ class MainActivity : AppCompatActivity() {
             binding.btnSend.setOnClickListener {
                 val commandbox = binding.messageInput.text // assuming 'commandbox' is the EditText ID
 
-                // Create the Intent to send email
-                val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                    "mailto", "sout.rahim@gmail.com", null))
-
-                // Add email subject
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
-
-                // Add the message body text
-                emailIntent.putExtra(Intent.EXTRA_TEXT, commandbox.toString())
-
-                // Start the activity for sending email with chooser
+                val emailIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "message/rfc822"
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf("sout.rahim@gmail.com"))
+                    putExtra(Intent.EXTRA_SUBJECT, "Quran Khmer AY")
+                    putExtra(Intent.EXTRA_TEXT, commandbox.toString())
+                }
                 startActivity(Intent.createChooser(emailIntent, "Send email..."))
             }
         }
@@ -426,7 +410,6 @@ class MainActivity : AppCompatActivity() {
 
         return result
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
