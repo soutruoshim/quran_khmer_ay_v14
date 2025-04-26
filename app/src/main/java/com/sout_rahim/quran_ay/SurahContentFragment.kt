@@ -33,13 +33,11 @@ import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
 import com.sout_rahim.quran_ay.presentation.viewmodel.SettingViewModel
 import kotlinx.coroutines.launch
 
-
 class SurahContentFragment : Fragment() {
     private lateinit var fragmentSurahContentBinding: FragmentSurahContentBinding
     private  lateinit var quranViewModel: QuranViewModel
     private lateinit var settingViewModel: SettingViewModel
     private lateinit var ayahAdapter: AyahAdapter
-
     private lateinit var bottomSheetDialog: BottomSheetDialog
 
     override fun onCreateView(
@@ -54,23 +52,16 @@ class SurahContentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         fragmentSurahContentBinding = FragmentSurahContentBinding.bind(view)
+
         quranViewModel= (activity as MainActivity).quranViewModel
         settingViewModel = (activity as MainActivity).settingViewModel
 
-        ayahAdapter = (activity as MainActivity).ayahAdapter
-
         bottomSheetDialog = BottomSheetDialog(requireContext())
 
-
+        ayahAdapter = (activity as MainActivity).ayahAdapter
         ayahAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable(Constants.SELECTED_SURAH,it)
-            }
-
             showBottomSheet(it)
-
-            Log.d("MYTAG", "Item clicked: $it")
-
+            Log.d(Constants.MYTAG, "Item clicked: $it")
         }
 
         val args : SurahContentFragmentArgs by navArgs()
@@ -89,13 +80,12 @@ class SurahContentFragment : Fragment() {
         initRecyclerView()
         viewSurahList(surahItem.id!!)
         setupSpinnerSelection()
-
         observeFontSize()
     }
     // This function observes the fontSize LiveData and updates the adapter whenever it changes.
     private fun observeFontSize() {
         settingViewModel.fontSize.observe(viewLifecycleOwner) { fontSize ->
-            Log.d("MYTAG", "FontSize received in Activity: $fontSize")
+            Log.d(Constants.MYTAG, "FontSize received in Activity: $fontSize")
             // Update the font size in the AyahAdapter
             ayahAdapter.updateFontSize(fontSize)
         }
@@ -105,8 +95,8 @@ class SurahContentFragment : Fragment() {
         bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.NoOverlayDialog).apply {
             val binding = BottomSheetBinding.inflate(LayoutInflater.from(context))
             setContentView(binding.root)
+
             quranViewModel.fetchAllBookmarks()
-            // Observe current bookmarks
 
             val favoriteItem = FavoriteItem.fromSurahContentItem(surahContentItem)
             val isBookmarked = quranViewModel.bookmarks.value.any { it.id == favoriteItem.id }
@@ -155,7 +145,6 @@ class SurahContentFragment : Fragment() {
     private fun setupSpinnerSelection() {
         fragmentSurahContentBinding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
                 if (position != 0) { // Ensure the first item (e.g., "آية") is not used
                     val item = fragmentSurahContentBinding.spinner.getItemAtPosition(position).toString()
                     Toast.makeText(requireContext(), item, Toast.LENGTH_LONG).show()
@@ -163,7 +152,6 @@ class SurahContentFragment : Fragment() {
                     val itemScroll = item.toIntOrNull() ?: return
                     scrollToAyahPosition(itemScroll)
                 }
-
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // No action needed
@@ -233,16 +221,15 @@ class SurahContentFragment : Fragment() {
                 val newFontSize = (currentFontSize + 2).coerceAtMost(40f)  // Increase font size but limit to max 40
                 settingViewModel.setFontSize(newFontSize)
                 observeFontSize()
-                Toast.makeText(requireContext(), "Zoom In clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "${getString(R.string.zoom_in)} ${newFontSize.toInt()}", Toast.LENGTH_SHORT).show()
                 true
             }
-
             R.id.action_zoom_out -> {
                 val currentFontSize = settingViewModel.fontSize.value ?: 16f
                 val newFontSize = (currentFontSize - 2).coerceAtLeast(16f)  // Decrease font size but limit to min 16
                 settingViewModel.setFontSize(newFontSize)
                 observeFontSize()
-                Toast.makeText(requireContext(), "Zoom Out clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "${getString(R.string.zoom_out)} ${newFontSize.toInt()}", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item) // Handle other menu items

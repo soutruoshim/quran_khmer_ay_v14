@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity() {
         // Fetch Surahs
         settingViewModel.loadSettings()
         settingViewModel.fontSize.observe(this) { fontSize ->
-            println("FontSize received in Activity: $fontSize")
+            //Log.d(Constants.MYTAG, "FontSize received in Activity: $fontSize")
         }
 
         // Observe dark mode changes
@@ -205,15 +205,14 @@ class MainActivity : AppCompatActivity() {
 
         //=========adapter click
         mixedAdapter.setOnAyahClickListener {
-            Log.d("selectedSurah", "Selected Surah: click on ayah")
             lifecycleScope.launch {
                 val selectedSurah = it.SuraID?.let { id -> quranViewModel.getSurahById(id) }
                 it.VerseID?.let { verseId -> quranViewModel.scrollToAyah(verseId) }
 
-                Log.d("selectedSurah", "Selected Surah: $selectedSurah")
+                Log.d(Constants.MYTAG, "Selected Surah: $selectedSurah")
 
                 val bundle = Bundle().apply {
-                    putSerializable("selected_surah", selectedSurah)
+                    putSerializable(Constants.SELECTED_SURAH, selectedSurah)
                 }
 
                 navController.navigate(R.id.surahContentFragment,bundle)
@@ -223,9 +222,10 @@ class MainActivity : AppCompatActivity() {
         mixedAdapter.setOnSurahClickListener {
 
             val bundle = Bundle().apply {
-                putSerializable("selected_surah",it)
+                putSerializable(Constants.SELECTED_SURAH,it)
             }
-            Log.d("selectedSurah", "Selected Surah: $it")
+
+            Log.d(Constants.MYTAG, "Selected Surah: $it")
 
             quranViewModel.scrollToAyah(Constants.ZERO)
 
@@ -333,17 +333,17 @@ class MainActivity : AppCompatActivity() {
         bottomSheetDialog = BottomSheetDialog(this, R.style.NoOverlayDialog).apply {
             val binding = BottomSheetFeedbackBinding.inflate(LayoutInflater.from(context))
             setContentView(binding.root)
-            // Handle language selection
+
             binding.btnSend.setOnClickListener {
-                val commandbox = binding.messageInput.text // assuming 'commandbox' is the EditText ID
+                val commandbox = binding.messageInput.text
 
                 val emailIntent = Intent(Intent.ACTION_SEND).apply {
                     type = "message/rfc822"
-                    putExtra(Intent.EXTRA_EMAIL, arrayOf("sout.rahim@gmail.com"))
-                    putExtra(Intent.EXTRA_SUBJECT, "Quran Khmer AY")
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(Constants.EMAIL_SUPPORT))
+                    putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJECTS)
                     putExtra(Intent.EXTRA_TEXT, commandbox.toString())
                 }
-                startActivity(Intent.createChooser(emailIntent, "Send email..."))
+                startActivity(Intent.createChooser(emailIntent, Constants.EMAIL_SEND))
             }
         }
         bottomSheetDialog.show()
@@ -357,7 +357,7 @@ class MainActivity : AppCompatActivity() {
         // Reset all icons first
         resetButtonIcons(binding)
 
-        Log.d("MYTAG", "langauge $currentLanguage")
+        Log.d(Constants.MYTAG, "langauge $currentLanguage")
         // Set active background for the selected language
         when (currentLanguage) {
             "en" -> {
@@ -387,7 +387,7 @@ class MainActivity : AppCompatActivity() {
         settingViewModel.setLanguage(lang)
 
         LocaleHelper.setLocale(this, lang)
-        Log.d("MYTAG", lang)
+        Log.d(Constants.MYTAG, lang)
         // Refresh the activity to apply the new language
         val intent = intent
         finish()

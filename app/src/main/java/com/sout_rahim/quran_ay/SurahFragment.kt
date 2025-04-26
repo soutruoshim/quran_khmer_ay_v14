@@ -29,9 +29,8 @@ class SurahFragment : Fragment() {
         surahAdapter= (activity as MainActivity).surahAdapter
 
         surahAdapter.setOnItemClickListener {
-
             val bundle = Bundle().apply {
-                putSerializable("selected_surah",it)
+                putSerializable(Constants.SELECTED_SURAH,it)
             }
 
             viewModel.scrollToAyah(Constants.ZERO)

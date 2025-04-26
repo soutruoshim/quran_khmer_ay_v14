@@ -12,7 +12,10 @@ object Constants {
     const val SURAH_TEXT = "سورة "
     const val BISMILLAH_TEXT = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
     const val BISMILLAH_TRANSLATE_TEXT = "ក្នុងនាមអល់ឡោះ មហាសប្បុរស មហាអាណិតស្រលាញ់"
-    const val SELECTED_SURAH = "selected_surahِ"
+    const val SELECTED_SURAH = "selected_surah"
+    const val EMAIL_SUPPORT = "sout.rahim@gmail.com"
+    const val EMAIL_SEND = "Send email..."
+    const val EMAIL_SUBJECTS = "Quran Khmer AY Feedback"
     const val MYTAG = "MYTAG"
 
     const val FONT: String = "fonts"

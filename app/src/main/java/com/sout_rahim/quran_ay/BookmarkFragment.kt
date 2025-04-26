@@ -17,14 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.sout_rahim.quran_ay.data.model.FavoriteItem
-import com.sout_rahim.quran_ay.data.model.SurahContentItem
-import com.sout_rahim.quran_ay.databinding.BottomSheetBinding
 import com.sout_rahim.quran_ay.databinding.BottomSheetDeleteBookmarkBinding
 import com.sout_rahim.quran_ay.databinding.FragmentBookmarkBinding
 import com.sout_rahim.quran_ay.presentation.adapter.AyahBookmarkAdapter
 import com.sout_rahim.quran_ay.presentation.viewmodel.QuranViewModel
 import com.sout_rahim.quran_ay.presentation.viewmodel.SettingViewModel
-import com.sout_rahim.quran_ay.util.Helper
+import com.sout_rahim.quran_ay.util.Constants
 import kotlinx.coroutines.launch
 
 class BookmarkFragment : Fragment() {
@@ -49,15 +47,14 @@ class BookmarkFragment : Fragment() {
         quranViewModel= (activity as MainActivity).quranViewModel
         settingViewModel = (activity as MainActivity).settingViewModel
 
-        ayahBookmarkAdapter = (activity as MainActivity).ayahBookmarkAdapter
-
         bottomSheetDialog = BottomSheetDialog(requireContext())
 
+        ayahBookmarkAdapter = (activity as MainActivity).ayahBookmarkAdapter
         ayahBookmarkAdapter.setOnBookmarkClickListener {
             val favoriteItem = FavoriteItem.fromSurahContentItem(it)
             quranViewModel.removeBookmark(favoriteItem)
             quranViewModel.fetchAllBookmarks()
-            // Log.d("MYTAG", "Item clicked: $it")
+            Toast.makeText(requireContext(), getString(R.string.bookmark_removed), Toast.LENGTH_SHORT).show()
         }
 
         ayahBookmarkAdapter.setOnRootClickListener {
@@ -66,10 +63,10 @@ class BookmarkFragment : Fragment() {
                 val selectedSurah = it.SuraID?.let { id -> quranViewModel.getSurahById(id) }
                 it.VerseID?.let { verseId -> quranViewModel.scrollToAyah(verseId) }
 
-                Log.d("selectedSurah", "Selected Surah: $selectedSurah")
+                Log.d(Constants.MYTAG, "Selected Surah: $selectedSurah")
 
                 val bundle = Bundle().apply {
-                    putSerializable("selected_surah", selectedSurah)
+                    putSerializable(Constants.SELECTED_SURAH, selectedSurah)
                 }
                 findNavController().navigate(
                     R.id.action_bookmarkFragment_to_surahContentFragment,
@@ -94,6 +91,7 @@ class BookmarkFragment : Fragment() {
                 }
                 btnConfirm.setOnClickListener {
                    quranViewModel.removeAllBookmarks()
+                   Toast.makeText(requireContext(), getString(R.string.bookmark_removed), Toast.LENGTH_SHORT).show()
                     dismiss()
                 }
             }
@@ -104,7 +102,7 @@ class BookmarkFragment : Fragment() {
     // This function observes the fontSize LiveData and updates the adapter whenever it changes.
     private fun observeFontSize() {
         settingViewModel.fontSize.observe(viewLifecycleOwner) { fontSize ->
-            Log.d("MYTAG", "FontSize received in Activity Bookmark: $fontSize")
+            Log.d(Constants.MYTAG, "FontSize received in Activity Bookmark: $fontSize")
             // Check if fontSize is greater than 26, if so, do not update
             // If fontSize is greater than 26, set it to 26
             val finalFontSize = if (fontSize > 26) {
@@ -130,7 +128,7 @@ class BookmarkFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             quranViewModel.surahBookmarkContent.collect { ayahs ->
                 ayahBookmarkAdapter.differ.submitList(ayahs)
-                Log.d("BookmarkDebug", "Received ${ayahs.size} bookmarked ayahs")
+                Log.d(Constants.MYTAG, "Bookmark Received ${ayahs.size} bookmarked ayahs")
             }
         }
     }
