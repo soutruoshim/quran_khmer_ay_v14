@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.sout_rahim.quran_za",
+  "applicationId": "com.sout_rahim.quran_ay",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 23,
-      "versionName": "14.0",
+      "versionCode": 24,
+      "versionName": "14.1",
       "outputFile": "app-release.apk"
     }
   ],

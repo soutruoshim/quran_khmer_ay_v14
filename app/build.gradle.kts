@@ -14,8 +14,8 @@ android {
         applicationId = "com.sout_rahim.quran_ay"
         minSdk = 24
         targetSdk = 35
-        versionCode = 23
-        versionName = "14.0"
+        versionCode = 25
+        versionName = "14.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
