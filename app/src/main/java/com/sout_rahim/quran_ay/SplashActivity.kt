@@ -44,6 +44,7 @@ class SplashActivity : AppCompatActivity() {
         // Delay for splash screen and then navigate to MainActivity
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()  // Close the splash activity so user can't go back to it
         }, 2000)  // 2000 milliseconds (2 seconds) delay
