@@ -46,6 +46,9 @@ class SplashActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            // Apply custom animation
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
             finish()  // Close the splash activity so user can't go back to it
         }, 2000)  // 2000 milliseconds (2 seconds) delay
     }
